@@ -1,0 +1,69 @@
+@startuml Diagram
+
+abstract class Papel {
+-Long id 
+-Formato formato 
+-Textura textura 
+}
+
+ 
+  class Sketchbook{
+ -Capa capa
+'Um sketchbook é feito com várias folhas
+  }
+ 
+ class Bloco {
+ 'Um bloco de folhas é feito com várias folhas
+ }
+
+  
+'A4, A3, B5, etc
+ enum Formato{ 
+A4 
+}
+ 
+ class Rolo {}
+
+ enum Modelo{
+ AQUARELA_A4 "Papel para aquarela formato A4" 
+ AQUARELA_A3 "Papel para aquarela formato A3"
+ QUADRINHO_B4 "Papel para quadrinhos formato B4"
+ QUADRINHO_A3 "Papel para quadrinhos formato A3"
+ MATERIAIS_SECOS_A4 "Papel para materiais secos" 
+ MATERIAIS_SECOS_A5
+ }
+ 
+class Capa {
+-String material
+}
+
+class Textura {
+-String descricao
+-Integer gramatura
+}
+
+Rolo --o Modelo 
+Bloco --o Modelo 
+Sketchbook --o Modelo 
+
+
+Textura --* Papel
+Formato --* Papel
+
+Sketchbook "1"*--"1" Capa
+
+
+Papel <|-- Bloco
+Papel <|-- Rolo
+Papel <|-- Sketchbook
+ 
+
+
+'Papel <|-- Rolo 
+'Papel "*"<|--"1" Bloco
+'Papel "*"<|--"1" Sketchbook
+'Marca ou Fornecedor? 
+
+
+
+@enduml
