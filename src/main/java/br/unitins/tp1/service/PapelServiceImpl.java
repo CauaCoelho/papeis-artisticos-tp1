@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.unitins.tp1.dto.PapelDto;
 import br.unitins.tp1.model.Papel;
+import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.PapelRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -20,8 +21,8 @@ public class PapelServiceImpl implements PapelService{
     }
 
     @Override
-    public List<Papel> findByModelo(String modelo) {
-        return repository.findByModelo(modelo);
+    public List<Papel> findByTextura(Textura textura) {
+        return repository.findByTextura(textura);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class PapelServiceImpl implements PapelService{
     @Override
     public Papel create(PapelDto dto) {
         Papel papel = new Papel();
-        papel.setModelo(dto.modelo());
+        papel.setTextura(dto.textura());
         papel.setFormato(dto.formato());
         repository.persist(papel); //manter os dados no BD
         return papel;
@@ -41,7 +42,7 @@ public class PapelServiceImpl implements PapelService{
     @Override
     public void update(Long id, PapelDto dto) {
         Papel papel = repository.findById(id);
-        papel.setModelo(dto.modelo());
+        papel.setTextura(dto.textura());
         papel.setFormato(dto.formato());
     }
 

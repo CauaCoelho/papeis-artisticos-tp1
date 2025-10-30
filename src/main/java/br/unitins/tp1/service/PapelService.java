@@ -4,10 +4,11 @@ import java.util.List;
 
 import br.unitins.tp1.dto.PapelDto;
 import br.unitins.tp1.model.Papel;
+import br.unitins.tp1.model.Textura;
 
 public interface PapelService {
     List<Papel> findAll();
-    List<Papel> findByModelo(String modelo);
+    List<Papel> findByTextura (Textura textura);
     Papel findById(Long id);
     Papel create (PapelDto dto);
     void update (Long id, PapelDto dto);
