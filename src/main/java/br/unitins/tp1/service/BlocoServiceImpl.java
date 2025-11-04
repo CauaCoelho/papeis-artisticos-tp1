@@ -2,7 +2,7 @@ package br.unitins.tp1.service;
 
 import java.util.List;
 
-import br.unitins.tp1.dto.BlocoDto;
+import br.unitins.tp1.dto.BlocoDTO;
 import br.unitins.tp1.model.Bloco;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.BlocoRepository;
@@ -32,14 +32,14 @@ public class BlocoServiceImpl implements BlocoService{
     }
 
     @Override
-    public Bloco create(BlocoDto dto) {
+    public Bloco create(BlocoDTO dto) {
         Bloco bloco = new Bloco();
         repository.persist(bloco); //manter os dados no BD
         return bloco;
     }
 
     @Override
-    public void update(Long id, BlocoDto dto) {
+    public void update(Long id, BlocoDTO dto) {
         Bloco bloco = repository.findById(id);
 
     }

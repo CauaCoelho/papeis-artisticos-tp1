@@ -1,6 +1,6 @@
 package br.unitins.tp1.dto;
 
-public record BlocoDto(
+public record BlocoDTO(
     Integer quantidadeFolhas
 ) {
 

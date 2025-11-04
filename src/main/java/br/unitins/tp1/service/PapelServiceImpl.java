@@ -2,7 +2,7 @@ package br.unitins.tp1.service;
 
 import java.util.List;
 
-import br.unitins.tp1.dto.PapelDto;
+import br.unitins.tp1.dto.PapelDTO;
 import br.unitins.tp1.model.Papel;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.PapelRepository;
@@ -31,7 +31,7 @@ public class PapelServiceImpl implements PapelService{
     }
 
     @Override
-    public Papel create(PapelDto dto) {
+    public Papel create(PapelDTO dto) {
         Papel papel = new Papel();
         papel.setTextura(dto.textura());
         papel.setFormato(dto.formato());
@@ -40,7 +40,7 @@ public class PapelServiceImpl implements PapelService{
     }
 
     @Override
-    public void update(Long id, PapelDto dto) {
+    public void update(Long id, PapelDTO dto) {
         Papel papel = repository.findById(id);
         papel.setTextura(dto.textura());
         papel.setFormato(dto.formato());
