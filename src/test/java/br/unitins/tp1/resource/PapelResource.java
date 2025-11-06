@@ -1,0 +1,62 @@
+package br.unitins.tp1.resource;
+
+import java.util.List;
+
+import br.unitins.tp1.dto.PapelDTO;
+import br.unitins.tp1.model.Papel;
+import br.unitins.tp1.model.Textura;
+import br.unitins.tp1.service.PapelService;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
+
+@Path("/papeis")
+@Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
+@Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
+public class PapelResource {
+
+
+    @Inject //injeção de dependência
+    PapelService service;
+
+    @GET
+    public List<Papel> buscarTodos() {
+        return service.findAll();
+    }
+
+    @GET
+    @Path ("/find/{textura}") //Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
+    public List <Papel> buscarPorTextura (Textura textura) {
+        return service.findByTextura(textura);
+    }
+
+    @POST
+    public Response incluir (PapelDTO dto){
+        return Response.status(Status.CREATED).entity(service.create(dto)).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Transactional
+    public Response editar(Long id, PapelDTO dto){
+        service.update(id, dto);
+        return Response.noContent().build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Transactional
+    public Response excluir(Long id){
+        service.delete(id);
+        return Response.noContent().build();
+    }
+}
