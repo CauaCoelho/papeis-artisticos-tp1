@@ -3,6 +3,8 @@ package br.unitins.tp1.service;
 import java.util.List;
 
 import br.unitins.tp1.dto.PapelDTO;
+import br.unitins.tp1.dto.PapelDTOResponse;
+import br.unitins.tp1.model.Formato;
 import br.unitins.tp1.model.Papel;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.PapelRepository;
@@ -26,17 +28,21 @@ public class PapelServiceImpl implements PapelService{
     }
 
     @Override
-    public Papel findById(Long id) {
-       return repository.findById(id);
+    public PapelDTOResponse findById(Long id) {
+       Papel papel = repository.findById(id);
+       
+       if (papel == null) 
+        return null;
+       return PapelDTOResponse.valueOf(papel);
     }
 
     @Override
-    public Papel create(PapelDTO dto) {
+    public PapelDTOResponse create(PapelDTO dto) {
         Papel papel = new Papel();
         papel.setTextura(dto.textura());
         papel.setFormato(dto.formato());
         repository.persist(papel); //manter os dados no BD
-        return papel;
+        return PapelDTOResponse.valueOf(papel);
     }
 
     @Override
@@ -49,6 +55,11 @@ public class PapelServiceImpl implements PapelService{
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Papel> findByFormato(Formato formato) {
+        return repository.findByFormato(formato);
     }
     
 }

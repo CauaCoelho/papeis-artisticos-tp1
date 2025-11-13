@@ -3,6 +3,7 @@ package br.unitins.tp1.resource;
 import java.util.List;
 
 import br.unitins.tp1.dto.BlocoDTO;
+import br.unitins.tp1.dto.BlocoDTOResponse;
 import br.unitins.tp1.model.Bloco;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.BlocoService;
@@ -38,7 +39,7 @@ public class BlocoResource {
     }
 
     @POST
-    public Bloco incluir (BlocoDTO dto){
+    public BlocoDTOResponse incluir (BlocoDTO dto){
         return service.create(dto);
     }
 

@@ -2,11 +2,15 @@ package br.unitins.tp1.resource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Random;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 
 import br.unitins.tp1.dto.PapelDTO;
 import br.unitins.tp1.dto.PapelDTOResponse;
+import br.unitins.tp1.model.Formato;
+import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.PapelService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
@@ -29,7 +33,9 @@ public class PapelResourceTest {
 
     @Test
     void incluirTest(){
-        PapelDTO dto = new PapelDTO(dto.textura(), dto.formato());
+        Textura textura = Textura.values()[new Random().nextInt(Textura.values().length)];
+        Formato formato = Formato.values()[new Random().nextInt(Formato.values().length)];
+        PapelDTO dto = new PapelDTO(textura, formato);
 
         RestAssured.given()
         .contentType(ContentType.JSON)
@@ -39,16 +45,17 @@ public class PapelResourceTest {
             .then()
             .statusCode(201)
             .body("id", CoreMatchers.notNullValue(),
-            "", CoreMatchers.is(null));
+            "textura", CoreMatchers.is(dto.textura()),
+            "formato", CoreMatchers.is(dto.formato()));
     }
 
     @Test
     void alterarTest(){
-        PapelDTO dto = new PapelDTO(dto.textura(), dto.formato());
+        PapelDTO dto = new PapelDTO(Textura.LISO, Formato.A3);
 
-        PapelDTOResponse response = PapelService.create(dto);
+        PapelDTOResponse response = papelService.create(dto);
 
-        PapelDTO dtoUpdate = new PapelDTO(null, null);
+        PapelDTO dtoUpdate = new PapelDTO(Textura.CASCA_DE_OVO, Formato.A4);
 
         RestAssured.given()
         .contentType(ContentType.JSON)

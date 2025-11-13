@@ -6,6 +6,7 @@ import br.unitins.tp1.model.Sketchbook;
 import br.unitins.tp1.model.Textura;
 
 public record SketchbookDTOResponse(
+    Long id,
     Capa capa,
     Integer quantidadeFolhas,
     Textura textura,
@@ -13,6 +14,7 @@ public record SketchbookDTOResponse(
 
     public static SketchbookDTOResponse valueOf(Sketchbook sketchbook){
         return new SketchbookDTOResponse(
+            sketchbook.getId(),
             sketchbook.getCapa(),
             sketchbook.getQuantidadeFolhas(),
             sketchbook.getTextura(),

@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import br.unitins.tp1.dto.SketchbookDTO;
 import br.unitins.tp1.dto.SketchbookDTOResponse;
+import br.unitins.tp1.model.Capa;
+import br.unitins.tp1.model.Formato;
+import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.SketchbookService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
@@ -29,7 +32,7 @@ public class SketchbookResourceTest {
 
     @Test
     void incluirTest(){
-        SketchbookDTO dto = new SketchbookDTO(dto.capa(), 1, dto.textura(), dto.formato());
+        SketchbookDTO dto = new SketchbookDTO(new Capa(), 98, Textura.CASCA_DE_OVO, Formato.B5);
 
         RestAssured.given()
         .contentType(ContentType.JSON)
@@ -46,11 +49,11 @@ public class SketchbookResourceTest {
 
     @Test
     void alterarTest(){
-        SketchbookDTO dto = new SketchbookDTO(dto.capa(), 1, dto.textura(), dto.formato());
+        SketchbookDTO dto = new SketchbookDTO(new Capa(), 98, Textura.TRANCADO, Formato.B3);
 
-        SketchbookDTOResponse response = SketchbookService.create(dto);
+        SketchbookDTOResponse response = sketchbookService.create(dto);
 
-        SketchbookDTO dtoUpdate = new SketchbookDTO(dto.capa(), 1, dto.textura(), dto.formato() );
+        SketchbookDTO dtoUpdate = new SketchbookDTO(dto.capa(), 1, dto.textura(), dto.formato());
 
         RestAssured.given()
         .contentType(ContentType.JSON)

@@ -3,6 +3,7 @@ package br.unitins.tp1.service;
 import java.util.List;
 
 import br.unitins.tp1.dto.SketchbookDTO;
+import br.unitins.tp1.dto.SketchbookDTOResponse;
 import br.unitins.tp1.model.Sketchbook;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.SketchbookRepository;
@@ -26,17 +27,21 @@ public class SketchbookServiceImpl implements SketchbookService{
     }
 
     @Override
-    public Sketchbook findById(Long id) {
-       return repository.findById(id);
+    public SketchbookDTOResponse findById(Long id) {
+        Sketchbook sketchbook = repository.findById(id);
+       
+       if (sketchbook == null) 
+        return null;
+       return SketchbookDTOResponse.valueOf(sketchbook);
     }
 
     @Override
-    public Sketchbook create(SketchbookDTO dto) {
+    public SketchbookDTOResponse create(SketchbookDTO dto) {
         Sketchbook sketchbook = new Sketchbook();
         sketchbook.setTextura(dto.textura());
         sketchbook.setFormato(dto.formato());
         repository.persist(sketchbook); //manter os dados no BD
-        return sketchbook;
+        return SketchbookDTOResponse.valueOf(sketchbook);
     }
 
     @Override

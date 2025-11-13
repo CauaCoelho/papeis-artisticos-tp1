@@ -3,6 +3,7 @@ package br.unitins.tp1.service;
 import java.util.List;
 
 import br.unitins.tp1.dto.BlocoDTO;
+import br.unitins.tp1.dto.BlocoDTOResponse;
 import br.unitins.tp1.model.Bloco;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.BlocoRepository;
@@ -22,20 +23,20 @@ public class BlocoServiceImpl implements BlocoService{
 
     @Override
     public List<Bloco> findByTextura(Textura textura) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByTextura'");
+        return repository.findByTextura(textura); 
     }
 
     @Override
-    public Bloco findById(Long id) {
-       return repository.findById(id);
+    public BlocoDTOResponse findById(Long id) {
+        Bloco bloco = repository.findById(id);
+       return BlocoDTOResponse.valueOf(bloco);
     }
 
     @Override
-    public Bloco create(BlocoDTO dto) {
+    public BlocoDTOResponse create(BlocoDTO dto) {
         Bloco bloco = new Bloco();
         repository.persist(bloco); //manter os dados no BD
-        return bloco;
+        return BlocoDTOResponse.valueOf(bloco);
     }
 
     @Override

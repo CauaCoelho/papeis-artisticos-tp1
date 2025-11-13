@@ -16,6 +16,8 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/papeis")
 @Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
@@ -38,21 +40,23 @@ public class SketchbookResource {
     }
 
     @POST
-    public Sketchbook incluir (SketchbookDTO dto){
-        return service.create(dto);
+    public Response incluir (SketchbookDTO dto){
+        return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public void editar(Long id, SketchbookDTO dto){
+    public Response editar(Long id, SketchbookDTO dto){
         service.update(id, dto);
+        return Response.noContent().build();
     }
 
     @DELETE
     @Path("/{id}")
     @Transactional
-    public void excluir(Long id){
+    public Response excluir(Long id){
         service.delete(id);
+        return Response.noContent().build();
     }
 }
