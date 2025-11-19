@@ -3,6 +3,7 @@ package br.unitins.tp1.resource;
 import java.util.List;
 
 import br.unitins.tp1.dto.RoloDTO;
+import br.unitins.tp1.dto.RoloDTOResponse;
 import br.unitins.tp1.model.Rolo;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.RoloService;
@@ -17,7 +18,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/papeis")
+@Path("/papeis/rolos")
 @Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
 @Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
 public class RoloResource {
@@ -38,7 +39,7 @@ public class RoloResource {
     }
 
     @POST
-    public Rolo incluir (RoloDTO dto){
+    public RoloDTOResponse incluir (RoloDTO dto){
         return service.create(dto);
     }
 

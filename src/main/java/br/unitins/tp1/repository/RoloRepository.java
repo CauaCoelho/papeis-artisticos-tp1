@@ -2,7 +2,9 @@ package br.unitins.tp1.repository;
 
 import java.util.List;
 
+import br.unitins.tp1.model.Formato;
 import br.unitins.tp1.model.Rolo;
+import br.unitins.tp1.model.Textura;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -10,7 +12,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class RoloRepository implements PanacheRepository<Rolo>{ //padroniza os recursos de acordo com a entidade Rolo
 
     public List<Rolo> findByRolo(Rolo rolo){
-        return find("SELECT p FROM Rolo p WHERE p.rolo LIKE ?1", "%" + rolo + "%").list();
+        return find("SELECT r FROM Rolo r WHERE r.rolo LIKE ?1", "%" + rolo + "%").list();
     }
     
+    public List<Rolo> findByTextura(Textura textura){
+        return find("SELECT r FROM Rolo r WHERE r.rolo LIKE ?1", "%" + textura + "%").list();
+    }
+
+    public List<Rolo> findByFormato(Formato formato){
+        return find("SELECT r FROM Rolo r WHERE r.rolo LIKE ?1", "%" + formato + "%").list();
+    }
 }

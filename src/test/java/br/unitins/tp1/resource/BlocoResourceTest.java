@@ -24,7 +24,7 @@ public class BlocoResourceTest {
     void buscarTodosTest(){
         RestAssured.given()
         .when()
-            .get("/blocos")
+            .get("papeis/blocos")
         .then()
             .statusCode(200);
     }
@@ -57,7 +57,7 @@ public class BlocoResourceTest {
         .contentType(ContentType.JSON)
         .body(dtoUpdate)
         .when()
-            .put("/blocos/" + response.id())
+            .put("papeis/blocos" + response.id())
         .then()
             .statusCode(204);   
 

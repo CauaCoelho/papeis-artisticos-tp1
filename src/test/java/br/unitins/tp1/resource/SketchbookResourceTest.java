@@ -25,7 +25,7 @@ public class SketchbookResourceTest {
     void buscarTodosTest(){
         RestAssured.given()
         .when()
-            .get("/sketchbooks")
+            .get("papeis/sketchbooks")
         .then()
             .statusCode(200);
     }
@@ -59,7 +59,7 @@ public class SketchbookResourceTest {
         .contentType(ContentType.JSON)
         .body(dtoUpdate)
         .when()
-            .put("/sketchbooks/" + response.id())
+            .put("papeis/sketchbooks" + response.id())
         .then()
             .statusCode(204);   
 

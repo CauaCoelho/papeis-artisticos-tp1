@@ -3,6 +3,7 @@ package br.unitins.tp1.repository;
 import java.util.List;
 
 import br.unitins.tp1.model.Bloco;
+import br.unitins.tp1.model.Textura;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -10,7 +11,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class BlocoRepository implements PanacheRepository<Bloco>{ //padroniza os recursos de acordo com a entidade Bloco
 
     public List<Bloco> findByBloco(Bloco bloco){
-        return find("SELECT p FROM Bloco p WHERE p.bloco LIKE ?1", "%" + bloco + "%").list();
+        return find("SELECT b FROM Bloco b WHERE b.bloco LIKE ?1", "%" + bloco + "%").list();
     }
     
+    public List<Bloco> findByTextura(Textura textura){
+        return find("SELECT b FROM Bloco b WHERE b.bloco LIKE ?1", "%" + textura + "%").list();
+    }
 }

@@ -9,17 +9,21 @@ abstract class Papel {
  
   class Sketchbook{
  -Capa capa
-'Um sketchbook é feito com várias folhas
   }
  
  class Bloco {
- 'Um bloco de folhas é feito com várias folhas
+ -Integer quantidadeFolhas
  }
 
   
-'A4, A3, B5, etc
  enum Formato{ 
-A4 
+A5 "Formato A5"
+A4 "Formato A4"
+A3 "Formato A3"
+B5 "Formato B5"
+B4 "Formato B4"
+B3 "Formato B3"
+
 }
  
  class Rolo {}
@@ -57,13 +61,33 @@ Papel <|-- Bloco
 Papel <|-- Rolo
 Papel <|-- Sketchbook
  
+class Usuario {
+-String nome
+-String login
+-String senha
+}
 
+enum FormaDePagamento{
+CARTAO_CREDITO "Cartão de crédito"
+CARTAO_DEBITO "Cartão de débito"
+BOLETO "Boleto"
+PIX "Pix"
+}
 
-'Papel <|-- Rolo 
-'Papel "*"<|--"1" Bloco
-'Papel "*"<|--"1" Sketchbook
-'Marca ou Fornecedor? 
+class Compra {
+-FormaDePagamento formaDePagamento
+-Papel produto
+}
 
+class Administrador {
+-String nome
+-String login
+-String senha
+}
+
+Compra *-- Usuario
+Compra *-- Papel
+Compra *-- FormaDePagamento
 
 
 @enduml

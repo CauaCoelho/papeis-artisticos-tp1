@@ -1,8 +1,10 @@
 package br.unitins.tp1.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
+@Entity
 public class Sketchbook extends Papel {
     private Integer quantidadeFolhas;
     @OneToOne
