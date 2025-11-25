@@ -7,6 +7,7 @@ import br.unitins.tp1.dto.BlocoDTOResponse;
 import br.unitins.tp1.model.Bloco;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.BlocoService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -18,7 +19,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/papeis/blocos")
+@Path("/blocos")
 @Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
 @Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
 public class BlocoResource {
@@ -38,11 +39,13 @@ public class BlocoResource {
         return service.findByTextura(textura);
     }
 
+    @RolesAllowed("Administrador")
     @POST
     public BlocoDTOResponse incluir (BlocoDTO dto){
         return service.create(dto);
     }
 
+    @RolesAllowed("Administrador")
     @PUT
     @Path("/{id}")
     @Transactional
@@ -50,6 +53,7 @@ public class BlocoResource {
         service.update(id, dto);
     }
 
+    @RolesAllowed("Administrador")
     @DELETE
     @Path("/{id}")
     @Transactional

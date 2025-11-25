@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 @JsonFormat(shape = Shape.OBJECT)
 public enum Textura { 
  //Trançado, casca de ovo, kraft, liso, etc.
-    TRANCADO(1, "Trançado"),
-    CASCA_DE_OVO(2, "Casca de ovo"),
-    KRAFT(3, "Kraft"),
-    LISO(4, "Liso");
+    TRANCADO(1l, "Trançado"),
+    CASCA_DE_OVO(2l, "Casca de ovo"),
+    KRAFT(3l, "Kraft"),
+    LISO(4l, "Liso");
 
     @JsonProperty("id")
     public final Long ID;
@@ -18,7 +18,7 @@ public enum Textura {
     @JsonProperty("nome")
     public final String NOME;
 
-    Textura(long id, String nome) {
+    Textura(Long id, String nome) {
         this.ID = id;
         this.NOME = nome;
     }

@@ -16,8 +16,10 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @QuarkusTest
+@Transactional
 public class PapelResourceTest {
     @Inject
     PapelService papelService;

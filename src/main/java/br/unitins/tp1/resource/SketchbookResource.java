@@ -6,6 +6,7 @@ import br.unitins.tp1.dto.SketchbookDTO;
 import br.unitins.tp1.model.Sketchbook;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.SketchbookService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -19,7 +20,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Path("/papeis/sketchbooks")
+@Path("/sketchbooks")
 @Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
 @Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
 public class SketchbookResource {
@@ -39,11 +40,13 @@ public class SketchbookResource {
         return service.findByTextura(textura);
     }
 
+    @RolesAllowed("Administrador")
     @POST
     public Response incluir (SketchbookDTO dto){
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
+    @RolesAllowed("Administrador")
     @PUT
     @Path("/{id}")
     @Transactional
@@ -52,6 +55,7 @@ public class SketchbookResource {
         return Response.noContent().build();
     }
 
+    @RolesAllowed("Administrador")
     @DELETE
     @Path("/{id}")
     @Transactional

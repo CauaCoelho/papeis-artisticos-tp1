@@ -1,22 +1,25 @@
 package br.unitins.tp1.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 
 @Entity
-public class Papel extends DefaultEntity {
-    private Long id;
-    private Textura textura;
-    private Formato formato;
+@Inheritance(strategy = InheritanceType.JOINED)
 
-    @ManyToOne
-    @JoinColumn(name = "id_sketchbook")
-    private Sketchbook sketchbook;
-    @ManyToOne
-    @JoinColumn(name = "id_bloco")
-    private Bloco bloco;
+public class Papel extends DefaultEntity {
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Textura textura;
+
     
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Formato formato;
 
     public Formato getFormato() {
         return formato;
@@ -24,14 +27,6 @@ public class Papel extends DefaultEntity {
 
     public void setFormato(Formato formato) {
         this.formato = formato;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Textura getTextura() {
