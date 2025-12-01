@@ -1,9 +1,10 @@
 package br.unitins.tp1.model;
 
-public class Administrador {
+public class Administrador extends DefaultEntity {
 private String nome;
 private String login;
 private String senha;
+private Prioridade prioridade;
 
 public String getNome() {
     return nome;
@@ -23,4 +24,12 @@ public String getSenha() {
 public void setSenha(String senha) {
     this.senha = senha;
 }
+public Prioridade getPrioridade() {
+    return prioridade;
+}
+public void setPrioridade(Prioridade prioridade) {
+    this.prioridade = prioridade;
+}
+
+
 }

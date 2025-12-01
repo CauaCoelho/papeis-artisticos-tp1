@@ -85,9 +85,16 @@ class Administrador {
 -String senha
 }
 
+enum Prioridade{
+ALTA ""
+BAIXA ""
+}
+
 Compra *-- Usuario
 Compra *-- Papel
 Compra *-- FormaDePagamento
 
+Prioridade *-- Administrador
+Prioridade *-- Usuario
 
 @enduml
