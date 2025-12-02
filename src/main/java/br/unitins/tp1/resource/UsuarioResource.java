@@ -12,13 +12,11 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
 
 @Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
@@ -38,12 +36,6 @@ public class UsuarioResource {
     @Path ("/find/{textura}") //Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
     public UsuarioDTOResponse buscarPorId (Long id) {
         return service.findById(id);
-    }
-
-    @RolesAllowed("Administrador")
-    @POST
-    public Response incluir (UsuarioDTO dto){
-        return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @RolesAllowed("Administrador")

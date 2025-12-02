@@ -4,16 +4,13 @@ import java.util.List;
 
 import br.unitins.tp1.dto.UsuarioDTO;
 import br.unitins.tp1.dto.UsuarioDTOResponse;
-import br.unitins.tp1.model.Formato;
 import br.unitins.tp1.model.Usuario;
-import br.unitins.tp1.model.Textura;
 
 public interface UsuarioService {
     List<Usuario> findAll();
-    List<Usuario> findByTextura (Textura textura);
-    List<Usuario> findByFormato (Formato formato);
+    Usuario findByNome(String nome);
     UsuarioDTOResponse findById(Long id);
-    UsuarioDTOResponse create (UsuarioDTO dto);
+    Usuario findByLogin(String login);
     void update (Long id, UsuarioDTO dto);
     void delete (Long id);
 }
