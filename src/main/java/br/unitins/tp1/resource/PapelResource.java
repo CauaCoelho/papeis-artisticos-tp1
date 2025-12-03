@@ -3,6 +3,7 @@ package br.unitins.tp1.resource;
 import java.util.List;
 
 import br.unitins.tp1.dto.PapelDTO;
+import br.unitins.tp1.dto.PapelDTOResponse;
 import br.unitins.tp1.model.Papel;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.PapelService;
@@ -17,8 +18,6 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
 
 @Path("/papeis")
 @Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
@@ -42,25 +41,23 @@ public class PapelResource {
 
     @RolesAllowed("Administrador")
     @POST
-    public Response incluir (PapelDTO dto){
-        return Response.status(Status.CREATED).entity(service.create(dto)).build();
+    public PapelDTOResponse incluir (PapelDTO dto){
+        return service.create(dto);
     }
 
     @RolesAllowed("Administrador")
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response editar(Long id, PapelDTO dto){
+    public void editar(Long id, PapelDTO dto){
         service.update(id, dto);
-        return Response.noContent().build();
     }
 
     @RolesAllowed("Administrador")
     @DELETE
     @Path("/{id}")
     @Transactional
-    public Response excluir(Long id){
+    public void excluir(Long id){
         service.delete(id);
-        return Response.noContent().build();
     }
 }
