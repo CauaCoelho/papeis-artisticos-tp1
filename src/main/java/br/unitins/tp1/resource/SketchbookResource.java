@@ -3,6 +3,7 @@ package br.unitins.tp1.resource;
 import java.util.List;
 
 import br.unitins.tp1.dto.SketchbookDTO;
+import br.unitins.tp1.dto.SketchbookDTOResponse;
 import br.unitins.tp1.model.Sketchbook;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.SketchbookService;
@@ -11,11 +12,13 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -30,8 +33,11 @@ public class SketchbookResource {
     SketchbookService service;
 
     @GET
-    public List<Sketchbook> buscarTodos() {
-        return service.findAll();
+    public Response buscarTodos(
+        @QueryParam("page") @DefaultValue("0") int page,
+        @QueryParam("pageSize") @DefaultValue("10") int pageSize
+    ) {
+        return Response.ok(service.findAll(page, pageSize)).build();
     }
 
     @GET
@@ -62,5 +68,10 @@ public class SketchbookResource {
     public Response excluir(Long id){
         service.delete(id);
         return Response.noContent().build();
+    }
+    @GET
+    @Path("/count")
+    public long count(){
+        return service.count();
     }
 }
