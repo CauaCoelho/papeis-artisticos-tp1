@@ -8,10 +8,11 @@ import br.unitins.tp1.model.Sketchbook;
 import br.unitins.tp1.model.Textura;
 
 public interface SketchbookService {
-    List<Sketchbook> findAll();
+    List<SketchbookDTOResponse> findAll(int page, int pageSize);
     List<Sketchbook> findByTextura(Textura textura);
     SketchbookDTOResponse findById(Long id);
     SketchbookDTOResponse create (SketchbookDTO dto);
     void update (Long id, SketchbookDTO dto);
     void delete (Long id);
+    long count();
 }

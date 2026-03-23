@@ -1,6 +1,7 @@
 package br.unitins.tp1.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.unitins.tp1.dto.SketchbookDTO;
 import br.unitins.tp1.dto.SketchbookDTOResponse;
@@ -17,9 +18,14 @@ public class SketchbookServiceImpl implements SketchbookService{
     SketchbookRepository repository;
 
     @Override
-    public List<Sketchbook> findAll() {
-        return repository.listAll();
+    public List<SketchbookDTOResponse> findAll(int page, int pageSize) {
+        List<Sketchbook> list = repository
+        .findAll()
+        .page(page, pageSize)
+        .list();
+        return list.stream().map(s -> SketchbookDTOResponse.valueOf(s)).collect(Collectors.toList());
     }
+
 
     @Override
     public List<Sketchbook> findByTextura(Textura textura) {
@@ -52,6 +58,10 @@ public class SketchbookServiceImpl implements SketchbookService{
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+    @Override
+    public long count() {
+        return repository.count();
     }
     
 }
