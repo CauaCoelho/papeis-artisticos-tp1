@@ -5,7 +5,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
-public class Sketchbook extends Papel {
+public class Sketchbook extends Produto {
     private Integer quantidadeFolhas;
     @OneToOne
     @JoinColumn(name = "id_capa")

@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.unitins.tp1.dto.RoloDTO;
 import br.unitins.tp1.dto.RoloDTOResponse;
-import br.unitins.tp1.model.Formato;
 import br.unitins.tp1.model.Rolo;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.RoloRepository;
@@ -40,7 +39,6 @@ public class RoloServiceImpl implements RoloService{
     public RoloDTOResponse create(RoloDTO dto) {
         Rolo rolo = new Rolo();
         rolo.setTextura(dto.textura());
-        rolo.setFormato(dto.formato());
         repository.persist(rolo); //manter os dados no BD
         return RoloDTOResponse.valueOf(rolo);
     }
@@ -49,7 +47,6 @@ public class RoloServiceImpl implements RoloService{
     public void update(Long id, RoloDTO dto) {
         Rolo rolo = repository.findById(id);
         rolo.setTextura(dto.textura());
-        rolo.setFormato(dto.formato());
     }
 
     @Override
@@ -57,9 +54,5 @@ public class RoloServiceImpl implements RoloService{
         repository.deleteById(id);
     }
 
-    @Override
-    public List<Rolo> findByFormato(Formato formato) {
-        return repository.findByFormato(formato);
-    }
     
 }

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import br.unitins.tp1.dto.BlocoDTO;
 import br.unitins.tp1.dto.BlocoDTOResponse;
-import br.unitins.tp1.model.Formato;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.BlocoService;
 import io.quarkus.test.junit.QuarkusTest;
@@ -33,7 +32,7 @@ public class BlocoResourceTest {
 
     @Test
     void incluirTest(){
-        BlocoDTO dto = new BlocoDTO(200, Textura.LISO, Formato.A4);
+        BlocoDTO dto = new BlocoDTO(200, Textura.LISO );
 
         RestAssured.given()
         .contentType(ContentType.JSON)
@@ -43,17 +42,16 @@ public class BlocoResourceTest {
             .then()
             .statusCode(201)
             .body("id", CoreMatchers.notNullValue(),
-            "textura", CoreMatchers.is(Textura.LISO),
-            "formato", CoreMatchers.is(Formato.A4));
+            "textura", CoreMatchers.is(Textura.LISO));
     }
 
     @Test
     void alterarTest(){
-        BlocoDTO dto = new BlocoDTO(100, Textura.KRAFT, Formato.A5);
+        BlocoDTO dto = new BlocoDTO(100, Textura.KRAFT);
 
         BlocoDTOResponse response = blocoService.create(dto);
 
-        BlocoDTO dtoUpdate = new BlocoDTO(300, Textura.TRANCADO, Formato.B5);
+        BlocoDTO dtoUpdate = new BlocoDTO(300, Textura.TRANCADO);
 
         RestAssured.given()
         .contentType(ContentType.JSON)

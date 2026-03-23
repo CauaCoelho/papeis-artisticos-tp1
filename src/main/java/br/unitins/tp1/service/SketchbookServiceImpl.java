@@ -39,7 +39,6 @@ public class SketchbookServiceImpl implements SketchbookService{
     public SketchbookDTOResponse create(SketchbookDTO dto) {
         Sketchbook sketchbook = new Sketchbook();
         sketchbook.setTextura(dto.textura());
-        sketchbook.setFormato(dto.formato());
         repository.persist(sketchbook); //manter os dados no BD
         return SketchbookDTOResponse.valueOf(sketchbook);
     }
@@ -48,7 +47,6 @@ public class SketchbookServiceImpl implements SketchbookService{
     public void update(Long id, SketchbookDTO dto) {
         Sketchbook sketchbook = repository.findById(id);
         sketchbook.setTextura(dto.textura());
-        sketchbook.setFormato(dto.formato());
     }
 
     @Override

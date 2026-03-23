@@ -42,7 +42,6 @@ public class BlocoServiceImpl implements BlocoService{
     @Override
     public void update(Long id, BlocoDTO dto) {
         Bloco bloco = repository.findById(id);
-        bloco.setFormato(null);
 
     }
 

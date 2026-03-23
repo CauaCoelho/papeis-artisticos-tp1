@@ -3,7 +3,7 @@ package br.unitins.tp1.model;
 import jakarta.persistence.Entity;
 
 @Entity
-public class Bloco extends Papel{
+public class Bloco extends Produto{
 private Integer quantidadeFolhas;
 
 public Integer getQuantidadeFolhas() {

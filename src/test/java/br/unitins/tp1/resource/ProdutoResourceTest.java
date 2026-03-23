@@ -7,11 +7,10 @@ import java.util.Random;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 
-import br.unitins.tp1.dto.PapelDTO;
-import br.unitins.tp1.dto.PapelDTOResponse;
-import br.unitins.tp1.model.Formato;
+import br.unitins.tp1.dto.ProdutoDTO;
+import br.unitins.tp1.dto.ProdutoDTOResponse;
 import br.unitins.tp1.model.Textura;
-import br.unitins.tp1.service.PapelService;
+import br.unitins.tp1.service.ProdutoService;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -20,9 +19,9 @@ import jakarta.transaction.Transactional;
 
 @QuarkusTest
 @Transactional
-public class PapelResourceTest {
+public class ProdutoResourceTest {
     @Inject
-    PapelService papelService;
+    ProdutoService produtoService;
 
     @Test
     void buscarTodosTest(){
@@ -36,8 +35,7 @@ public class PapelResourceTest {
     @Test
     void incluirTest(){
         Textura textura = Textura.values()[new Random().nextInt(Textura.values().length)];
-        Formato formato = Formato.values()[new Random().nextInt(Formato.values().length)];
-        PapelDTO dto = new PapelDTO(textura, formato);
+        ProdutoDTO dto = new ProdutoDTO(textura);
 
         RestAssured.given()
         .contentType(ContentType.JSON)
@@ -47,17 +45,16 @@ public class PapelResourceTest {
             .then()
             .statusCode(201)
             .body("id", CoreMatchers.notNullValue(),
-            "textura", CoreMatchers.is(dto.textura()),
-            "formato", CoreMatchers.is(dto.formato()));
+            "textura", CoreMatchers.is(dto.textura()));
     }
 
     @Test
     void alterarTest(){
-        PapelDTO dto = new PapelDTO(Textura.LISO, Formato.A3);
+        ProdutoDTO dto = new ProdutoDTO(Textura.LISO);
 
-        PapelDTOResponse response = papelService.create(dto);
+        ProdutoDTOResponse response = produtoService.create(dto);
 
-        PapelDTO dtoUpdate = new PapelDTO(Textura.CASCA_DE_OVO, Formato.A4);
+        ProdutoDTO dtoUpdate = new ProdutoDTO(Textura.CASCA_DE_OVO);
 
         RestAssured.given()
         .contentType(ContentType.JSON)
@@ -67,8 +64,7 @@ public class PapelResourceTest {
         .then()
             .statusCode(204);   
 
-        response = papelService.findById(response.id());
-        assertEquals(dtoUpdate.formato(), response.formato());
+        response = produtoService.findById(response.id());
         assertEquals(dtoUpdate.textura(), response.textura());
     }
 }

@@ -2,11 +2,11 @@ package br.unitins.tp1.resource;
 
 import java.util.List;
 
-import br.unitins.tp1.dto.PapelDTO;
-import br.unitins.tp1.dto.PapelDTOResponse;
-import br.unitins.tp1.model.Papel;
+import br.unitins.tp1.dto.ProdutoDTO;
+import br.unitins.tp1.dto.ProdutoDTOResponse;
+import br.unitins.tp1.model.Produto;
 import br.unitins.tp1.model.Textura;
-import br.unitins.tp1.service.PapelService;
+import br.unitins.tp1.service.ProdutoService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -22,26 +22,26 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/papeis")
 @Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
 @Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
-public class PapelResource {
+public class ProdutoResource {
 
 
     @Inject //injeção de dependência
-    PapelService service;
+    ProdutoService service;
 
     @GET
-    public List<Papel> buscarTodos() {
+    public List<Produto> buscarTodos() {
         return service.findAll();
     }
 
     @GET
     @Path ("/find/{textura}") //Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
-    public List <Papel> buscarPorTextura (Textura textura) {
+    public List <Produto> buscarPorTextura (Textura textura) {
         return service.findByTextura(textura);
     }
 
     @RolesAllowed("Administrador")
     @POST
-    public PapelDTOResponse incluir (PapelDTO dto){
+    public ProdutoDTOResponse incluir (ProdutoDTO dto){
         return service.create(dto);
     }
 
@@ -49,7 +49,7 @@ public class PapelResource {
     @PUT
     @Path("/{id}")
     @Transactional
-    public void editar(Long id, PapelDTO dto){
+    public void editar(Long id, ProdutoDTO dto){
         service.update(id, dto);
     }
 
