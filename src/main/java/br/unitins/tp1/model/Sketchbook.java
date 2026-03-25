@@ -10,6 +10,7 @@ public class Sketchbook extends Produto {
     @OneToOne
     @JoinColumn(name = "id_capa")
     private Capa capa;
+    private Categoria categoria;
     
 
     public Integer getQuantidadeFolhas() {

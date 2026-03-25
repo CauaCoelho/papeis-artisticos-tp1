@@ -1,71 +1,87 @@
 @startuml Diagram
 
-abstract class Papel {
--Long id 
--Formato formato 
--Textura textura 
-}
+ abstract class Produto {
+ -Long id 
+ -Formato formato 
+ -Textura textura 
+ }
 
+  class PapelAvulso {}
+
+ class TecnicaArtistica {
+  -String nome
+ }
  
-  class Sketchbook{
+ class Marca {
+-String nome
+ }
+ 
+ class Sketchbook{
  -Capa capa
-  }
+ }
  
  class Bloco {
  -Integer quantidadeFolhas
  }
 
   
- enum Formato{ 
-A5 "Formato A5"
-A4 "Formato A4"
-A3 "Formato A3"
-B5 "Formato B5"
-B4 "Formato B4"
-B3 "Formato B3"
-
+class varianteProduto{
+  -Long id
+  -String formato
+  -int gramatura
+  -String cor 
+  -double preco
 }
- 
- class Rolo {}
+ class Rolo {
+ -Double comprimento
+ }
 
- enum Modelo{
- AQUARELA_A4 "Papel para aquarela formato A4" 
- AQUARELA_A3 "Papel para aquarela formato A3"
- QUADRINHO_B4 "Papel para quadrinhos formato B4"
- QUADRINHO_A3 "Papel para quadrinhos formato A3"
- MATERIAIS_SECOS_A4 "Papel para materiais secos" 
- MATERIAIS_SECOS_A5
+ enum Categoria{
+ -String nome
+ }
+ 
+ class EspecificacaoTecnica{
+ -Double ph
+ -Double opacidade
+ -Double absorcao
  }
  
 class Capa {
 -String material
 }
 
-class Textura {
+enum Textura {
 -String descricao
 -Integer gramatura
 }
 
-Rolo --o Modelo 
-Bloco --o Modelo 
-Sketchbook --o Modelo 
+Rolo --o Categoria 
+Bloco --o Categoria 
+Sketchbook --o Categoria 
 
-
-Textura --* Papel
-Formato --* Papel
+Textura --* Produto
+varianteProduto <-- Produto
+varianteProduto <-- itemPedido
+EspecificacaoTecnica --> Produto
+Marca --o Produto
+TecnicaArtistica --> Produto
 
 Sketchbook "1"*--"1" Capa
 
 
-Papel <|-- Bloco
-Papel <|-- Rolo
-Papel <|-- Sketchbook
+
+Produto <|-- Bloco
+Produto <|-- Rolo
+Produto <|-- Sketchbook
+Produto <|-- PapelAvulso
  
 class Usuario {
 -String nome
 -String login
 -String senha
 }
+
+class Cliente {}
 
 enum FormaDePagamento{
 CARTAO_CREDITO "Cartão de crédito"
@@ -76,25 +92,21 @@ PIX "Pix"
 
 class Compra {
 -FormaDePagamento formaDePagamento
--Papel produto
+-Produto produto
 }
 
-class Administrador {
--String nome
--String login
--String senha
-}
+class Administrador {}
 
 enum Prioridade{
 ALTA ""
 BAIXA ""
 }
 
-Compra *-- Usuario
-Compra *-- Papel
+Compra <-- Cliente
+Compra *-- Produto
 Compra *-- FormaDePagamento
 
-Prioridade *-- Administrador
-Prioridade *-- Usuario
+Usuario <|-- Administrador
+Usuario <|-- Cliente
 
 @enduml

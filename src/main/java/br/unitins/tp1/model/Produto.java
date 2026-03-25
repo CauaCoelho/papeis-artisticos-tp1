@@ -19,7 +19,7 @@ public class Produto extends DefaultEntity {
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-  
+    private Marca marca; 
 
     public Textura getTextura() {
         return textura;

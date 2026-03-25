@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 @Entity
 public class Bloco extends Produto{
 private Integer quantidadeFolhas;
+ private Categoria categoria;
 
 public Integer getQuantidadeFolhas() {
     return quantidadeFolhas;
