@@ -4,12 +4,14 @@ import java.util.List;
 
 import br.unitins.tp1.dto.PapelAvulsoDTO;
 import br.unitins.tp1.dto.PapelAvulsoDTOResponse;
+import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.PapelAvulso;
 import br.unitins.tp1.model.Textura;
 
 public interface PapelAvulsoService {
     List<PapelAvulso> findAll();
     List<PapelAvulso> findByTextura(Textura textura);
+    List<PapelAvulso> findByCategoria (Categoria categoria);
     PapelAvulsoDTOResponse findById(Long id);
     PapelAvulsoDTOResponse create (PapelAvulsoDTO dto);
     void update (Long id, PapelAvulsoDTO dto);

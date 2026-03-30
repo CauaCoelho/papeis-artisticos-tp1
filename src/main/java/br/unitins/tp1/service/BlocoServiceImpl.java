@@ -33,6 +33,11 @@ public class BlocoServiceImpl implements BlocoService{
     }
 
     @Override
+    public List<Bloco> findByQuantidadeFolhas(int quantidadeFolhas) {   
+        return repository.findByQuantidadeFolhas(quantidadeFolhas);
+    }
+
+    @Override
     public BlocoDTOResponse create(BlocoDTO dto) {
         Bloco bloco = new Bloco();
         repository.persist(bloco); //manter os dados no BD

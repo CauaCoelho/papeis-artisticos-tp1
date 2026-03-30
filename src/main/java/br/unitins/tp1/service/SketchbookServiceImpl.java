@@ -5,6 +5,9 @@ import java.util.stream.Collectors;
 
 import br.unitins.tp1.dto.SketchbookDTO;
 import br.unitins.tp1.dto.SketchbookDTOResponse;
+import br.unitins.tp1.model.Bloco;
+import br.unitins.tp1.model.Capa;
+import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.Sketchbook;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.SketchbookRepository;
@@ -33,6 +36,12 @@ public class SketchbookServiceImpl implements SketchbookService{
     }
 
     @Override
+    public List<Sketchbook> findByCapa(Capa capa) {
+        return repository.findByCapa(capa);
+    }
+    
+
+    @Override
     public SketchbookDTOResponse findById(Long id) {
         Sketchbook sketchbook = repository.findById(id);
        
@@ -40,6 +49,11 @@ public class SketchbookServiceImpl implements SketchbookService{
         return null;
        return SketchbookDTOResponse.valueOf(sketchbook);
     }
+
+    @Override
+    public List<Sketchbook> findByCategoria(Categoria categoria) {
+        return repository.findByCategoria(categoria);
+    } 
 
     @Override
     public SketchbookDTOResponse create(SketchbookDTO dto) {
@@ -63,5 +77,7 @@ public class SketchbookServiceImpl implements SketchbookService{
     public long count() {
         return repository.count();
     }
+
+
     
 }

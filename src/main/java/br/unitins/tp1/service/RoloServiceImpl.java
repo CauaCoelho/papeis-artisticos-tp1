@@ -4,6 +4,8 @@ import java.util.List;
 
 import br.unitins.tp1.dto.RoloDTO;
 import br.unitins.tp1.dto.RoloDTOResponse;
+import br.unitins.tp1.model.Bloco;
+import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.Rolo;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.RoloRepository;
@@ -34,6 +36,16 @@ public class RoloServiceImpl implements RoloService{
         return null;
        return RoloDTOResponse.valueOf(rolo);
     }
+
+    @Override
+    public List<Rolo> findByComprimento(double comprimento) {
+        return repository.findByComprimento(comprimento);
+    }
+
+    @Override
+    public List<Rolo> findByCategoria(Categoria categoria) {
+        return repository.findByCategoria(categoria);
+    } 
 
     @Override
     public RoloDTOResponse create(RoloDTO dto) {

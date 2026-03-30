@@ -2,6 +2,7 @@ package br.unitins.tp1.repository;
 
 import java.util.List;
 
+import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.PapelAvulso;
 import br.unitins.tp1.model.Textura;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -16,5 +17,9 @@ public class PapelAvulsoRepository implements PanacheRepository<PapelAvulso>{ //
     
     public List<PapelAvulso> findByTextura(Textura textura){
         return find("SELECT b FROM PapelAvulso b WHERE b.papelavulso LIKE ?1", "%" + textura + "%").list();
+    }
+
+    public List<PapelAvulso> findByCategoria(Categoria categoria){
+        return find("SELECT s FROM PapelAvulso s WHERE p.categoria LIKE ?1", "%" + categoria + "%").list();
     }
 }
