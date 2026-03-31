@@ -5,6 +5,7 @@ import java.util.List;
 import br.unitins.tp1.dto.BlocoDTO;
 import br.unitins.tp1.dto.BlocoDTOResponse;
 import br.unitins.tp1.model.Bloco;
+import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.BlocoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -37,6 +38,11 @@ public class BlocoServiceImpl implements BlocoService{
         return repository.findByQuantidadeFolhas(quantidadeFolhas);
     }
 
+    @Override
+    public List<Bloco> findByCategoria(Categoria categoria) {
+        return repository.findByCategoria(categoria);
+    } 
+    
     @Override
     public BlocoDTOResponse create(BlocoDTO dto) {
         Bloco bloco = new Bloco();

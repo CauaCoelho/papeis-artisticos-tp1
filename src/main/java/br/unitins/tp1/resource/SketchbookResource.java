@@ -9,6 +9,7 @@ import br.unitins.tp1.service.SketchbookService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
@@ -16,6 +17,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -55,7 +57,7 @@ public class SketchbookResource {
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response editar(Long id, SketchbookDTO dto){
+    public Response editar(@PathParam("id")Long id, @Valid SketchbookDTO dto){
         service.update(id, dto);
         return Response.noContent().build();
     }
@@ -64,7 +66,7 @@ public class SketchbookResource {
     @DELETE
     @Path("/{id}")
     @Transactional
-    public Response excluir(Long id){
+    public Response excluir(@PathParam("id")Long id){
         service.delete(id);
         return Response.noContent().build();
     }

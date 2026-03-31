@@ -3,21 +3,26 @@ package br.unitins.tp1.resource;
 import java.util.List;
 
 import br.unitins.tp1.dto.RoloDTO;
-import br.unitins.tp1.dto.RoloDTOResponse;
 import br.unitins.tp1.model.Rolo;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.RoloService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/rolos")
 @Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
@@ -29,8 +34,11 @@ public class RoloResource {
     RoloService service;
 
     @GET
-    public List<Rolo> buscarTodos() {
-        return service.findAll();
+    public Response buscarTodos(
+        @QueryParam("page") @DefaultValue("0") int page,
+        @QueryParam("pageSize") @DefaultValue("10") int pageSize
+    ) {
+        return Response.ok(service.findAll()).build();
     }
 
     @GET
@@ -41,23 +49,25 @@ public class RoloResource {
 
     @RolesAllowed("Administrador")
     @POST
-    public RoloDTOResponse incluir (RoloDTO dto){
-        return service.create(dto);
+    public Response incluir (RoloDTO dto){
+        return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @RolesAllowed("Administrador")
     @PUT
     @Path("/{id}")
     @Transactional
-    public void editar(Long id, RoloDTO dto){
+    public Response editar(@PathParam("id")Long id, @Valid RoloDTO dto){
         service.update(id, dto);
+        return Response.noContent().build();
     }
 
     @RolesAllowed("Administrador")
     @DELETE
     @Path("/{id}")
     @Transactional
-    public void excluir(Long id){
+    public Response excluir(@PathParam("id")Long id){
         service.delete(id);
+        return Response.noContent().build();
     }
 }

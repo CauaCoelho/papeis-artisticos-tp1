@@ -15,4 +15,12 @@ public void setQuantidadeFolhas(Integer quantidadeFolhas) {
     this.quantidadeFolhas = quantidadeFolhas;
 }
 
+public Categoria getCategoria() {
+    return categoria;
+}
+
+public void setCategoria(Categoria categoria) {
+    this.categoria = categoria;
+}
+
 }

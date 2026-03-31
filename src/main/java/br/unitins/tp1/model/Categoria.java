@@ -1,9 +1,13 @@
 package br.unitins.tp1.model;
 
-public enum Categoria {
-    DESENHO,
-    PINTURA,
-    ESCULTURA,
-    CALIGRAFIA,
-    OUTROS
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+public class Categoria {
+
+    @Id
+    @GeneratedValue
+    public Long id;
+
+    public String nome;
 }
