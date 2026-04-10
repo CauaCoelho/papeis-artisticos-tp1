@@ -1,6 +1,9 @@
 package br.unitins.tp1.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,6 +14,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -21,18 +25,14 @@ public class Produto extends DefaultEntity {
     @Column(nullable = false)
     private Textura textura;
 
-    
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Marca marca; 
+    @ManyToOne
+    @JoinColumn(name = "marca_id")
+    private Marca marca;
 
-      @ManyToMany
-    @JoinTable(
-        name = "produto_categoria",
-        joinColumns = @JoinColumn(name = "produto_id"),
-        inverseJoinColumns = @JoinColumn(name = "categoria_id")
-    )
-    public List<Categoria> categorias;
+    @ManyToMany
+    @JoinTable(name = "produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+    @JsonManagedReference
+    private List<Categoria> categorias = new ArrayList<>();
 
     public Textura getTextura() {
         return textura;
@@ -42,5 +42,20 @@ public class Produto extends DefaultEntity {
         this.textura = textura;
     }
 
-  
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
 }

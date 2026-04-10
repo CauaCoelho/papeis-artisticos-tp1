@@ -1,16 +1,15 @@
 package br.unitins.tp1.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
+import br.unitins.tp1.dto.PageResponse;
 import br.unitins.tp1.dto.SketchbookDTO;
 import br.unitins.tp1.dto.SketchbookDTOResponse;
-import br.unitins.tp1.model.Bloco;
 import br.unitins.tp1.model.Capa;
 import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.Sketchbook;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.SketchbookRepository;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -21,12 +20,20 @@ public class SketchbookServiceImpl implements SketchbookService{
     SketchbookRepository repository;
 
     @Override
-    public List<SketchbookDTOResponse> findAll(int page, int pageSize) {
-        List<Sketchbook> list = repository
-        .findAll()
-        .page(page, pageSize)
-        .list();
-        return list.stream().map(s -> SketchbookDTOResponse.valueOf(s)).collect(Collectors.toList());
+     public PageResponse<SketchbookDTOResponse> findAll(int page, int pageSize) {
+        // 1. Cria a query básica
+        PanacheQuery<Sketchbook> query = repository.findAll();
+        
+        // 2. Aplica a paginação e converte para DTO usando o método valueOf
+        List<SketchbookDTOResponse> list = query.page(page, pageSize)
+            .stream()
+            .map(SketchbookDTOResponse::valueOf)
+            .toList();
+            
+        // 3. Obtém o total de registros para o [length] do mat-paginator
+        long total = query.count();
+        
+        return new PageResponse<>(list, total);
     }
 
 
@@ -77,6 +84,8 @@ public class SketchbookServiceImpl implements SketchbookService{
     public long count() {
         return repository.count();
     }
+
+    
 
 
     

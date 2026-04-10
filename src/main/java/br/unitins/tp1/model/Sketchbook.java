@@ -11,7 +11,7 @@ public class Sketchbook extends Produto {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_capa")
     private Capa capa;
-    private Categoria categoria;
+    
     
 
     public Integer getQuantidadeFolhas() {
@@ -30,12 +30,6 @@ public class Sketchbook extends Produto {
         this.capa = capa;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
     
 }
