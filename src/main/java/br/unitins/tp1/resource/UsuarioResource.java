@@ -4,7 +4,6 @@ package br.unitins.tp1.resource;
 import br.unitins.tp1.dto.UsuarioDTO;
 import br.unitins.tp1.dto.UsuarioDTOResponse;
 import br.unitins.tp1.service.UsuarioService;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -43,7 +42,6 @@ public class UsuarioResource {
         return service.findById(id);
     }
 
-    @RolesAllowed("Administrador")
     @PUT
     @Path("/{id}")
     @Transactional
@@ -52,7 +50,6 @@ public class UsuarioResource {
         return Response.noContent().build();
     }
 
-    @RolesAllowed("Administrador")
     @DELETE
     @Path("/{id}")
     @Transactional

@@ -6,7 +6,6 @@ import br.unitins.tp1.dto.PapelAvulsoDTO;
 import br.unitins.tp1.model.PapelAvulso;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.PapelAvulsoService;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -47,13 +46,12 @@ public class PapelAvulsoResource {
         return service.findByTextura(textura);
     }
 
-    @RolesAllowed("Administrador")
     @POST
+    @Transactional
     public Response incluir (PapelAvulsoDTO dto){
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
-    @RolesAllowed("Administrador")
     @PUT
     @Path("/{id}")
     @Transactional
@@ -62,7 +60,6 @@ public class PapelAvulsoResource {
         return Response.noContent().build();
     }
 
-    @RolesAllowed("Administrador")
     @DELETE
     @Path("/{id}")
     @Transactional
