@@ -24,38 +24,43 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
 @Path("/blocos")
-@Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
-@Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
+@Produces(MediaType.APPLICATION_JSON) // Tipo de conteúdo que vai ser produzido
+@Consumes(MediaType.APPLICATION_JSON) // Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para
+                                      // todos os métodos
 public class BlocoResource {
 
-
-    @Inject //injeção de dependência
+    @Inject // injeção de dependência
     BlocoService service;
 
     @GET
     public Response buscarTodos(
-        @QueryParam("page") @DefaultValue("0") int page,
-        @QueryParam("pageSize") @DefaultValue("10") int pageSize
-    ) {
+            @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
         return Response.ok(service.findAll()).build();
     }
 
     @GET
-    @Path ("/find/{textura}") //Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
-    public List <Bloco> buscarPorTextura (Textura textura) {
+    @Path("/search")
+    public Response buscarPorNome(@QueryParam("nome") String nome) {
+        return Response.ok(service.findByNome(nome)).build();
+    }
+
+    @GET
+    @Path("/find/{textura}") // Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
+    public List<Bloco> buscarPorTextura(Textura textura) {
         return service.findByTextura(textura);
     }
 
     @POST
     @Transactional
-    public Response incluir (BlocoDTO dto){
+    public Response incluir(BlocoDTO dto) {
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response editar(@PathParam("id")Long id, @Valid BlocoDTO dto){
+    public Response editar(@PathParam("id") Long id, @Valid BlocoDTO dto) {
         service.update(id, dto);
         return Response.noContent().build();
     }
@@ -63,8 +68,14 @@ public class BlocoResource {
     @DELETE
     @Path("/{id}")
     @Transactional
-    public Response excluir(@PathParam("id")Long id){
+    public Response excluir(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/count")
+    public long count() {
+        return service.count();
     }
 }

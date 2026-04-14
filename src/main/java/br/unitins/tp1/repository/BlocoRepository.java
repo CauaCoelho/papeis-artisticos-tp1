@@ -8,21 +8,27 @@ import br.unitins.tp1.model.Textura;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
-@ApplicationScoped //tempo de vida da aplicação enquanto o server estiver no ar
-public class BlocoRepository implements PanacheRepository<Bloco>{ //padroniza os recursos de acordo com a entidade Bloco
+@ApplicationScoped // tempo de vida da aplicação enquanto o server estiver no ar
+public class BlocoRepository implements PanacheRepository<Bloco> { // padroniza os recursos de acordo com a entidade
+                                                                   // Bloco
 
-    public List<Bloco> findByBloco(Bloco bloco){
+    public List<Bloco> findByBloco(Bloco bloco) {
         return find("SELECT b FROM Bloco b WHERE b.bloco LIKE ?1", "%" + bloco + "%").list();
     }
-    
-    public List<Bloco> findByTextura(Textura textura){
+
+    public List<Bloco> findByNome(String nome) {
+        return find("LOWER(nome) LIKE ?1", "%" + nome.toLowerCase() + "%").list();
+    }
+
+    public List<Bloco> findByTextura(Textura textura) {
         return find("SELECT b FROM Bloco b WHERE b.bloco LIKE ?1", "%" + textura + "%").list();
     }
-    public List<Bloco> findByQuantidadeFolhas(int quantidadeFolhas){
+
+    public List<Bloco> findByQuantidadeFolhas(int quantidadeFolhas) {
         return find("SELECT b FROM Bloco b WHERE b.quantidadeFolhas = ?1", quantidadeFolhas).list();
     }
 
-    public List<Bloco> findByCategoria(Categoria categoria){
+    public List<Bloco> findByCategoria(Categoria categoria) {
         return find("SELECT s FROM Bloco s WHERE p.categoria LIKE ?1", "%" + categoria + "%").list();
     }
 }
