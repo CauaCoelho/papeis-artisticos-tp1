@@ -4,6 +4,7 @@ import br.unitins.tp1.model.Capa;
 import br.unitins.tp1.model.Textura;
 
 public record SketchbookDTO(
+    
     Capa capa,
     Integer quantidadeFolhas,
     Textura textura) {

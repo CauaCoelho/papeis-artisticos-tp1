@@ -9,15 +9,16 @@ import br.unitins.tp1.model.Capa;
 import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.Sketchbook;
 import br.unitins.tp1.model.Textura;
+import jakarta.validation.Valid;
 
 public interface SketchbookService {
     PageResponse<SketchbookDTOResponse> findAll(int page, int pageSize);
     List<Sketchbook> findByTextura(Textura textura);
     List<Sketchbook> findByCapa(Capa capa);
     List<Sketchbook> findByCategoria (Categoria categoria);
-    SketchbookDTOResponse findById(Long id);
-    SketchbookDTOResponse create (SketchbookDTO dto);
-    void update (Long id, SketchbookDTO dto);
+    Sketchbook findById(Long id);
+    Sketchbook create (@Valid SketchbookDTO sketchbookDTO);
+    void update (Long id, SketchbookDTO sketchbookDTO);
     void delete (Long id);
     long count();
 }

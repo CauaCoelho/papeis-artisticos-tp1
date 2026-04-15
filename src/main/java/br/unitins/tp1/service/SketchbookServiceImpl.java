@@ -49,12 +49,12 @@ public class SketchbookServiceImpl implements SketchbookService{
     
 
     @Override
-    public SketchbookDTOResponse findById(Long id) {
+    public Sketchbook findById(Long id) {
         Sketchbook sketchbook = repository.findById(id);
        
        if (sketchbook == null) 
         return null;
-       return SketchbookDTOResponse.valueOf(sketchbook);
+       return sketchbook;
     }
 
     @Override
@@ -63,13 +63,13 @@ public class SketchbookServiceImpl implements SketchbookService{
     } 
 
     @Override
-    public SketchbookDTOResponse create(SketchbookDTO dto) {
+    public Sketchbook create(SketchbookDTO dto) {
         Sketchbook sketchbook = new Sketchbook();
         sketchbook.setTextura(dto.textura());
         sketchbook.setCapa(dto.capa());
         sketchbook.setQuantidadeFolhas(dto.quantidadeFolhas());
         repository.persist(sketchbook); //manter os dados no BD
-        return SketchbookDTOResponse.valueOf(sketchbook);
+        return sketchbook;
     }
 
     @Override

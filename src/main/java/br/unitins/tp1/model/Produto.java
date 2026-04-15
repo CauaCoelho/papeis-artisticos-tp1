@@ -26,7 +26,7 @@ public class Produto extends DefaultEntity {
     private Textura textura;
 
     @ManyToOne
-    @JoinColumn(name = "marca_id")
+    @JoinColumn(name = "marca_id", nullable = false)
     private Marca marca;
 
     @ManyToMany
