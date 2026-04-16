@@ -1,25 +1,45 @@
 package br.unitins.tp1.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity
-public class Capa {
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
+public enum Capa {
+    PAPEL_COUCHE(1L, "Papel Couchê"),
+    BROCHURA(2L, "Brochura"),
+    COURO(3L, "Couro"),
+    CARTAO(4L, "Cartão");
+
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private final Long ID;
+    private final String NOME;
 
-    private String material;
-
-    public String getMaterial() {
-        return material;
+    Capa(Long id, String nome) {
+        this.ID = id;
+        this.NOME = nome;
     }
 
-    public void setMaterial(String material) {
-        this.material = material;
+    public Long getID() {
+        return ID;
     }
 
+    public String getNOME() {
+        return NOME;
+    }
+
+    public static Capa valueOf(long id) {
+        for (Capa capa : Capa.values()) {
+            if (capa.ID == id)
+                return capa;
+        }
+        return null;
+    }
 
 }

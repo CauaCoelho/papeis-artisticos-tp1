@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.unitins.tp1.dto.PapelAvulsoDTO;
 import br.unitins.tp1.dto.PapelAvulsoDTOResponse;
-import br.unitins.tp1.model.Bloco;
 import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.PapelAvulso;
 import br.unitins.tp1.model.Textura;

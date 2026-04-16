@@ -34,6 +34,8 @@ public class Produto extends DefaultEntity {
     @JsonManagedReference
     private List<Categoria> categorias = new ArrayList<>();
 
+    private EspecificacaoTecnica especificacaoTecnica;
+    @Enumerated(EnumType.STRING)
     public Textura getTextura() {
         return textura;
     }
@@ -57,5 +59,15 @@ public class Produto extends DefaultEntity {
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
     }
+
+    public EspecificacaoTecnica getEspecificacaoTecnica() {
+        return especificacaoTecnica;
+    }
+
+    public void setEspecificacaoTecnica(EspecificacaoTecnica especificacaoTecnica) {
+        this.especificacaoTecnica = especificacaoTecnica;
+    }
+
+    
 
 }

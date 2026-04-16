@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.unitins.tp1.dto.RoloDTO;
 import br.unitins.tp1.dto.RoloDTOResponse;
-import br.unitins.tp1.model.Bloco;
 import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.Rolo;
 import br.unitins.tp1.model.Textura;
