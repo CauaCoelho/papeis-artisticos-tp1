@@ -1,4 +1,4 @@
-package br.unitins.tp1.repository;
+/*package br.unitins.tp1.repository;
 
 import br.unitins.tp1.model.Usuario;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -15,3 +15,4 @@ public class UsuarioRepository implements PanacheRepository<Usuario>{ //padroniz
         return find("SELECT u FROM Usuario u WHERE u.usuario LIKE ?1", "%" + nome + "%").firstResult();
     }
 }
+    */

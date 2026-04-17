@@ -1,4 +1,4 @@
-package br.unitins.tp1.service;
+/*package br.unitins.tp1.service;
 
 import java.util.List;
 
@@ -14,3 +14,4 @@ public interface UsuarioService {
     void update (Long id, UsuarioDTO dto);
     void delete (Long id);
 }
+    */

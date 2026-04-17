@@ -56,7 +56,7 @@ public class BlocoServiceImpl implements BlocoService {
     public BlocoDTOResponse create(BlocoDTO dto) {
         Bloco bloco = new Bloco();
         bloco.setQuantidadeFolhas(dto.quantidadeFolhas());
-        bloco.setTextura(dto.textura());
+        bloco.setTextura(Textura.valueOf(dto.idTextura()));
         repository.persist(bloco); // manter os dados no BD
         return BlocoDTOResponse.valueOf(bloco);
     }
@@ -65,7 +65,7 @@ public class BlocoServiceImpl implements BlocoService {
     public void update(Long id, BlocoDTO dto) {
         Bloco bloco = repository.findById(id);
         bloco.setQuantidadeFolhas(dto.quantidadeFolhas());
-        bloco.setTextura(dto.textura());
+        bloco.setTextura(Textura.valueOf(dto.idTextura()));
 
     }
 

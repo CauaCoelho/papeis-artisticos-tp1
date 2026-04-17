@@ -1,5 +1,6 @@
 package br.unitins.tp1.model;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +8,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
@@ -21,9 +20,8 @@ import jakarta.persistence.ManyToOne;
 
 public class Produto extends DefaultEntity {
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Textura textura;
+    @Column(name = "textura_id", nullable = false)
+    private Long texturaId;
 
     @ManyToOne
     @JoinColumn(name = "marca_id", nullable = false)
@@ -35,13 +33,15 @@ public class Produto extends DefaultEntity {
     private List<Categoria> categorias = new ArrayList<>();
 
     private EspecificacaoTecnica especificacaoTecnica;
-    @Enumerated(EnumType.STRING)
-    public Textura getTextura() {
-        return textura;
-    }
 
+    @Transient
+    public Textura getTextura() {
+        return Textura.valueOf(texturaId);
+    }
+    
+    @Transient
     public void setTextura(Textura textura) {
-        this.textura = textura;
+        this.texturaId = (textura != null) ? textura.ID : null;
     }
 
     public Marca getMarca() {
@@ -67,7 +67,5 @@ public class Produto extends DefaultEntity {
     public void setEspecificacaoTecnica(EspecificacaoTecnica especificacaoTecnica) {
         this.especificacaoTecnica = especificacaoTecnica;
     }
-
-    
 
 }

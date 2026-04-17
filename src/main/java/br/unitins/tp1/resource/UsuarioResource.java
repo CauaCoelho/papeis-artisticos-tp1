@@ -1,4 +1,4 @@
-package br.unitins.tp1.resource;
+/*package br.unitins.tp1.resource;
 
 
 import br.unitins.tp1.dto.UsuarioDTO;
@@ -57,4 +57,4 @@ public class UsuarioResource {
         service.delete(id);
         return Response.noContent().build();
     }
-}
+}*/

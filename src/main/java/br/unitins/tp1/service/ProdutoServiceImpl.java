@@ -38,7 +38,7 @@ public class ProdutoServiceImpl implements ProdutoService{
     @Override
     public ProdutoDTOResponse create(ProdutoDTO dto) {
         Produto produto = new Produto();
-        produto.setTextura(dto.textura());
+         produto.setTextura(Textura.valueOf(dto.idTextura()));
         repository.persist(produto); //manter os dados no BD
         return ProdutoDTOResponse.valueOf(produto);
     }
@@ -46,7 +46,7 @@ public class ProdutoServiceImpl implements ProdutoService{
     @Override
     public void update(Long id, ProdutoDTO dto) {
         Produto produto = repository.findById(id);
-        produto.setTextura(dto.textura());
+         produto.setTextura(Textura.valueOf(dto.idTextura()));
     }
 
     @Override

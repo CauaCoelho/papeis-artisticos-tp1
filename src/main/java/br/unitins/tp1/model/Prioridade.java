@@ -1,4 +1,4 @@
-package br.unitins.tp1.model;
+/*package br.unitins.tp1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -27,3 +27,4 @@ public enum Prioridade {
         return null;
     }
 }
+*/

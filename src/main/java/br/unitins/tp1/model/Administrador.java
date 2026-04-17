@@ -1,4 +1,4 @@
-package br.unitins.tp1.model;
+/*package br.unitins.tp1.model;
 
 public class Administrador extends DefaultEntity {
 private String nome;
@@ -32,4 +32,4 @@ public void setPrioridade(Prioridade prioridade) {
 }
 
 
-}
+}*/

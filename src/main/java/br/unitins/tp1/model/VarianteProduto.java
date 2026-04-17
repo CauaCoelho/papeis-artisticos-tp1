@@ -6,4 +6,45 @@ public class VarianteProduto {
     private int gramatura;
     private String cor;
     private double preco;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public int getGramatura() {
+        return gramatura;
+    }
+
+    public void setGramatura(int gramatura) {
+        this.gramatura = gramatura;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
 }

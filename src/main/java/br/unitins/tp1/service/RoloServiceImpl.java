@@ -49,7 +49,7 @@ public class RoloServiceImpl implements RoloService{
     @Override
     public RoloDTOResponse create(RoloDTO dto) {
         Rolo rolo = new Rolo();
-        rolo.setTextura(dto.textura());
+         rolo.setTextura(Textura.valueOf(dto.idTextura()));
         repository.persist(rolo); //manter os dados no BD
         return RoloDTOResponse.valueOf(rolo);
     }
@@ -57,7 +57,7 @@ public class RoloServiceImpl implements RoloService{
     @Override
     public void update(Long id, RoloDTO dto) {
         Rolo rolo = repository.findById(id);
-        rolo.setTextura(dto.textura());
+         rolo.setTextura(Textura.valueOf(dto.idTextura()));
     }
 
     @Override

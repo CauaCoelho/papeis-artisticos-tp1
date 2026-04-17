@@ -1,6 +1,8 @@
-package br.unitins.tp1.model;
+/*package br.unitins.tp1.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 public class Usuario extends DefaultEntity {
    private String nome;
@@ -8,6 +10,7 @@ public class Usuario extends DefaultEntity {
    @Column(unique = true)
     private String login;
     private String senha;
+    @Enumerated(EnumType.STRING)
     private Prioridade prioridade;
     
     public String getNome() {
@@ -39,3 +42,4 @@ public class Usuario extends DefaultEntity {
     
     
 }
+    */

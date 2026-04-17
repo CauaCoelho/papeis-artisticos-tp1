@@ -1,4 +1,4 @@
-package br.unitins.tp1.dto;
+/*package br.unitins.tp1.dto;
 
 import br.unitins.tp1.model.Prioridade;
 import br.unitins.tp1.model.Administrador;
@@ -22,4 +22,4 @@ public record AdministradorDTOResponse(
         );
     }
 
-}
+}*/

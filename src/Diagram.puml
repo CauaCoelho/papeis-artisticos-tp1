@@ -46,7 +46,7 @@ class varianteProduto{
  -Double absorcao
  }
  
-class Capa {
+enum Capa {
 -String material
 }
 
@@ -55,14 +55,13 @@ enum Textura {
 -Integer gramatura
 }
 
-Rolo --o Categoria 
-Bloco --o Categoria 
-Sketchbook --o Categoria 
+Produto <-- Categoria 
+
 
 Textura --* Produto
 varianteProduto <-- Produto
 varianteProduto <-- itemPedido
-EspecificacaoTecnica --> Produto
+EspecificacaoTecnica --* Produto
 Marca --o Produto
 TecnicaArtistica --> Produto
 
