@@ -5,8 +5,15 @@
 -- insert into myentity (id, field) values(3, 'field-3');
 -- alter sequence myentity_seq restart with 4;
 
-insert into sketchbook (quantidadeFolhas, id_capa) values (100, 1l);
-insert into sketchbook (quantidadeFolhas, id_capa) values (98, 2l);
-insert into sketchbook (quantidadeFolhas, id_capa) values (54, 3l);
-insert into sketchbook (quantidadeFolhas, id_capa) values (75, 4l);
+-- Inserir produtos base para sketchbooks (herança JOINED)
+insert into produto (id, textura_id) values (1, 'LISO');
+insert into produto (id, textura_id) values (2, 'TRANCADO');
+insert into produto (id, textura_id) values (3, 'KRAFT');
+insert into produto (id, textura_id) values (4, 'CASCA_DE_OVO');
+
+-- Inserir sketchbooks
+insert into sketchbook (id, quantidadeFolhas, capa_id) values (1, 100, 'PAPEL_COUCHE');
+insert into sketchbook (id, quantidadeFolhas, capa_id) values (2, 98, 'BROCHURA');
+insert into sketchbook (id, quantidadeFolhas, capa_id) values (3, 54, 'COURO');
+insert into sketchbook (id, quantidadeFolhas, capa_id) values (4, 75, 'CARTAO');
 

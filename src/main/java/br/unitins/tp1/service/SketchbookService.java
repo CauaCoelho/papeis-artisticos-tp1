@@ -21,4 +21,5 @@ public interface SketchbookService {
     void update (Long id, SketchbookDTO sketchbookDTO);
     void delete (Long id);
     long count();
+    long count(String nome);
 }

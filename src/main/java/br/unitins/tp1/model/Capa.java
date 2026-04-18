@@ -14,8 +14,6 @@ public enum Capa {
 
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public final Long ID;
     private final String NOME;
 

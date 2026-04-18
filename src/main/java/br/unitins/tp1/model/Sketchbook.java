@@ -1,20 +1,16 @@
 package br.unitins.tp1.model;
 
-import java.beans.Transient;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 public class Sketchbook extends Produto {
     private Integer quantidadeFolhas;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_capa")
+    @Enumerated(EnumType.STRING)
     @Column(name = "capa_id", nullable = false)
-    private Long capaId;
+    private Capa capa;
     
     
 
@@ -24,14 +20,13 @@ public class Sketchbook extends Produto {
 
     public void setQuantidadeFolhas(Integer quantidadeFolhas) {
         this.quantidadeFolhas = quantidadeFolhas;
-    }
-    @Transient
+    }   
+
     public Capa getCapa() {
-        return Capa.valueOf(capaId);
+        return capa;
     }
-    @Transient
     public void setCapa(Capa capa) {
-        this.capaId = (capa != null) ? capa.ID : null;
+        this.capa = capa;
     }
 
 
