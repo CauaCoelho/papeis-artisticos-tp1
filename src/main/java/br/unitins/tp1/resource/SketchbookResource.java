@@ -41,6 +41,12 @@ public class SketchbookResource {
     }
 
     @GET
+    @Path("/{id}")
+    public Response buscarPorId(@PathParam("id") Long id) {
+        return Response.ok(service.findById(id)).build();
+    }
+
+    @GET
     @Path ("/find/{textura}") //Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
     public List <Sketchbook> buscarPorTextura (Textura textura) {
         return service.findByTextura(textura);

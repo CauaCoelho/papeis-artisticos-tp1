@@ -84,7 +84,12 @@ public class SketchbookServiceImpl implements SketchbookService{
     }
     @Override
     public long count() {
-        return repository.count();
+        return repository.findAll().count();
+    }
+
+    @Override
+    public long count(String nome) {
+        return repository.findByNome(nome).count();
     }
 
     

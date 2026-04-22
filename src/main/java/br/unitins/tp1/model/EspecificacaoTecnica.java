@@ -1,5 +1,8 @@
 package br.unitins.tp1.model;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class EspecificacaoTecnica {
     private double ph;
     private double opacidade;

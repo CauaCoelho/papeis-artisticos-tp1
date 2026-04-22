@@ -4,13 +4,14 @@ import java.util.List;
 
 import br.unitins.tp1.dto.BlocoDTO;
 import br.unitins.tp1.dto.BlocoDTOResponse;
+import br.unitins.tp1.dto.PageResponse;
 import br.unitins.tp1.model.Bloco;
 import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.BlocoRepository;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.core.Response;
 
 @ApplicationScoped
 public class BlocoServiceImpl implements BlocoService {
@@ -18,17 +19,21 @@ public class BlocoServiceImpl implements BlocoService {
     @Inject
     BlocoRepository repository;
 
-    @Override
-    public List<Bloco> findAll() {
-        return repository.listAll();
-    }
-    @Override
-    public Response findByNome(String nome) {
-        List<BlocoDTOResponse> blocos = repository.findByNome(nome).stream().map(BlocoDTOResponse::valueOf).toList();
-        if (blocos.isEmpty()) {
-            return Response.noContent().build();
-        }
-        return Response.ok(blocos).build();
+      @Override
+     public PageResponse<BlocoDTOResponse> findAll(int page, int pageSize) {
+        // 1. Cria a query básica
+        PanacheQuery<Bloco> query = repository.findAll();
+        
+        // 2. Aplica a paginação e converte para DTO usando o método valueOf
+        List<BlocoDTOResponse> list = query.page(page, pageSize)
+            .stream()
+            .map(BlocoDTOResponse::valueOf)
+            .toList();
+            
+        // 3. Obtém o total de registros para o [length] do mat-paginator
+        long total = query.count();
+        
+        return new PageResponse<>(list, total);
     }
 
     @Override
@@ -37,14 +42,13 @@ public class BlocoServiceImpl implements BlocoService {
     }
 
     @Override
-    public BlocoDTOResponse findById(Long id) {
-        Bloco bloco = repository.findById(id);
-        return BlocoDTOResponse.valueOf(bloco);
+    public List<Bloco> findByQuantidadeFolhas(int quantidadeFolhas) {
+        return repository.findByQuantidadeFolhas(quantidadeFolhas);
     }
 
     @Override
-    public List<Bloco> findByQuantidadeFolhas(int quantidadeFolhas) {
-        return repository.findByQuantidadeFolhas(quantidadeFolhas);
+    public Bloco findById(Long id) {
+        return repository.findById(id);
     }
 
     @Override
@@ -53,12 +57,12 @@ public class BlocoServiceImpl implements BlocoService {
     }
 
     @Override
-    public BlocoDTOResponse create(BlocoDTO dto) {
+    public Bloco create(BlocoDTO dto) {
         Bloco bloco = new Bloco();
         bloco.setQuantidadeFolhas(dto.quantidadeFolhas());
         bloco.setTextura(Textura.valueOf(dto.idTextura()));
         repository.persist(bloco); // manter os dados no BD
-        return BlocoDTOResponse.valueOf(bloco);
+        return bloco;
     }
 
     @Override
@@ -77,6 +81,11 @@ public class BlocoServiceImpl implements BlocoService {
     @Override
     public long count() {
         return repository.count();
+    }
+
+    @Override
+    public long count(String nome) {
+        return repository.findByNome(nome).count();
     }
 
 }
