@@ -48,7 +48,9 @@ public class PapelAvulsoServiceImpl implements PapelAvulsoService{
     @Override
     public void update(Long id, PapelAvulsoDTO dto) {
         PapelAvulso papelavulso = repository.findById(id);
-
+        papelavulso.setTipoPapel(dto.tipoPapel());
+        papelavulso.setTamanho(dto.tamanho());
+        papelavulso.setTextura(Textura.valueOf(dto.idTextura()));
     }
 
     @Override

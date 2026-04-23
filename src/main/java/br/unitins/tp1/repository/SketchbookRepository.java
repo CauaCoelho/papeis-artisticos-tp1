@@ -21,15 +21,15 @@ public class SketchbookRepository implements PanacheRepository<Sketchbook> {
     }
     
     public List<Sketchbook> findByTextura(Textura textura){
-        return find("SELECT s FROM Sketchbook s WHERE p.textura LIKE ?1", "%" + textura + "%").list();
+        return find("SELECT s FROM Sketchbook s WHERE s.textura = ?1", textura).list();
     }
     
     public List<Sketchbook> findByCapa(Capa capa){
-        return find("SELECT s FROM Sketchbook s WHERE p.capa LIKE ?1", "%" + capa + "%").list();
+        return find("SELECT s FROM Sketchbook s WHERE s.capa = ?1", capa).list();
     }
 
     public List<Sketchbook> findByCategoria(Categoria categoria){
-        return find("SELECT s FROM Sketchbook s WHERE p.categoria LIKE ?1", "%" + categoria + "%").list();
+        return find("SELECT s FROM Sketchbook s WHERE ?1 MEMBER OF s.categorias", categoria).list();
     }
     
     

@@ -75,7 +75,9 @@ public class SketchbookServiceImpl implements SketchbookService{
     @Override
     public void update(Long id, SketchbookDTO dto) {
         Sketchbook sketchbook = repository.findById(id);
-         sketchbook.setTextura(Textura.valueOf(dto.idTextura()));
+        sketchbook.setTextura(Textura.valueOf(dto.idTextura()));
+        sketchbook.setCapa(Capa.valueOf(dto.idCapa()));
+        sketchbook.setQuantidadeFolhas(dto.quantidadeFolhas());
     }
 
     @Override

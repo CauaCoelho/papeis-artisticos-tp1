@@ -16,10 +16,10 @@ public class PapelAvulsoRepository implements PanacheRepository<PapelAvulso>{ //
     }
     
     public List<PapelAvulso> findByTextura(Textura textura){
-        return find("SELECT b FROM PapelAvulso b WHERE b.papelavulso LIKE ?1", "%" + textura + "%").list();
+        return find("SELECT b FROM PapelAvulso b WHERE b.textura = ?1", textura).list();
     }
 
     public List<PapelAvulso> findByCategoria(Categoria categoria){
-        return find("SELECT s FROM PapelAvulso s WHERE p.categoria LIKE ?1", "%" + categoria + "%").list();
+        return find("SELECT s FROM PapelAvulso s WHERE ?1 MEMBER OF s.categorias", categoria).list();
     }
 }

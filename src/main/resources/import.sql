@@ -6,14 +6,15 @@
 -- alter sequence myentity_seq restart with 4;
 
 -- Inserir produtos base para sketchbooks (herança JOINED)
-insert into produto (id, textura_id) values (1, 'LISO');
-insert into produto (id, textura_id) values (2, 'TRANCADO');
-insert into produto (id, textura_id) values (3, 'KRAFT');
-insert into produto (id, textura_id) values (4, 'CASCA_DE_OVO');
+-- Não passamos o ID para a tabela pai (produto), deixando o BD gerar automaticamente
+insert into produto (textura_id) values ('LISO');
+insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_id_seq'), 100, 'PAPEL_COUCHE');
 
--- Inserir sketchbooks
-insert into sketchbook (id, quantidadeFolhas, capa_id) values (1, 100, 'PAPEL_COUCHE');
-insert into sketchbook (id, quantidadeFolhas, capa_id) values (2, 98, 'BROCHURA');
-insert into sketchbook (id, quantidadeFolhas, capa_id) values (3, 54, 'COURO');
-insert into sketchbook (id, quantidadeFolhas, capa_id) values (4, 75, 'CARTAO');
+insert into produto (textura_id) values ('TRANCADO');
+insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_id_seq'), 98, 'BROCHURA');
 
+insert into produto (textura_id) values ('KRAFT');
+insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_id_seq'), 54, 'COURO');
+
+insert into produto (textura_id) values ('CASCA_DE_OVO');
+insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_id_seq'), 75, 'CARTAO');
