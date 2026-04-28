@@ -1,9 +1,6 @@
 package br.unitins.tp1.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Capa {
@@ -11,8 +8,6 @@ public enum Capa {
     BROCHURA(2L, "Brochura"),
     COURO(3L, "Couro"),
     CARTAO(4L, "Cartão");
-
-
 
     public final Long ID;
     private final String NOME;

@@ -1,13 +1,7 @@
 package br.unitins.tp1.resource;
 
-import java.util.List;
-
-import br.unitins.tp1.dto.SketchbookDTO;
-import br.unitins.tp1.model.Categoria;
-import br.unitins.tp1.model.Marca;
-import br.unitins.tp1.model.Sketchbook;
-import br.unitins.tp1.model.Textura;
-import br.unitins.tp1.service.SketchbookService;
+import br.unitins.tp1.dto.MarcaDTO;
+import br.unitins.tp1.service.MarcaService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -25,14 +19,13 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
-@Path("/sketchbooks")
-@Produces(MediaType.APPLICATION_JSON) // Tipo de conteúdo que vai ser produzido
-@Consumes(MediaType.APPLICATION_JSON) // Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para
-                                      // todos os métodos
-public class SketchbookResource {
+@Path("/marcas")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public class MarcaResource {
 
-    @Inject // injeção de dependência
-    SketchbookService service;
+    @Inject
+    MarcaService service;
 
     @GET
     public Response buscarTodos(
@@ -48,21 +41,21 @@ public class SketchbookResource {
     }
 
     @GET
-    @Path("/find/{textura}") // Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
-    public List<Sketchbook> buscarPorTextura(Textura textura) {
-        return service.findByTextura(textura);
+    @Path("/find/{nome}")
+    public Response buscarPorNome(@PathParam("nome") String nome) {
+        return Response.ok(service.findByNome(nome).list()).build();
     }
 
     @POST
     @Transactional
-    public Response incluir(SketchbookDTO dto) {
+    public Response incluir(@Valid MarcaDTO dto) {
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response editar(@PathParam("id") Long id, @Valid SketchbookDTO dto) {
+    public Response editar(@PathParam("id") Long id, @Valid MarcaDTO dto) {
         service.update(id, dto);
         return Response.noContent().build();
     }
@@ -73,17 +66,5 @@ public class SketchbookResource {
     public Response excluir(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
-    }
-
-    @GET
-    @Path("/find/categoria/{idCategoria}")
-    public List<Sketchbook> buscarPorCategoria(@PathParam("idCategoria") Long idCategoria) {
-        return service.findByCategoria(idCategoria);
-    }
-
-    @GET
-    @Path("/find/marca/{idMarca}")
-    public List<Sketchbook> buscarPorMarca(@PathParam("idMarca") Long idMarca) {
-        return service.findByMarca(idMarca);
     }
 }
