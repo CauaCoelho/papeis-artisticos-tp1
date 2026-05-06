@@ -1,7 +1,5 @@
 package br.unitins.tp1.service;
 
-import java.util.List;
-
 import br.unitins.tp1.dto.MarcaDTO;
 import br.unitins.tp1.dto.MarcaDTOResponse;
 import br.unitins.tp1.dto.PageResponse;

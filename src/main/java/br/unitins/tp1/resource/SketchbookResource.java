@@ -3,8 +3,6 @@ package br.unitins.tp1.resource;
 import java.util.List;
 
 import br.unitins.tp1.dto.SketchbookDTO;
-import br.unitins.tp1.model.Categoria;
-import br.unitins.tp1.model.Marca;
 import br.unitins.tp1.model.Sketchbook;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.SketchbookService;

@@ -1,11 +1,18 @@
 package br.unitins.tp1.model;
 
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 public class VarianteProduto {
     private Long id;
     private String nome;
     private int gramatura;
     private String cor;
     private double preco;
+
+    @ManyToOne
+    @JoinColumn(name = "id_produto")
+    private Produto produto;
 
     public Long getId() {
         return id;
