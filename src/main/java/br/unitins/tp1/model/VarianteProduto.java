@@ -1,11 +1,12 @@
 package br.unitins.tp1.model;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-public class VarianteProduto {
-    private Long id;
-    private String nome;
+@Entity
+public class VarianteProduto extends DefaultEntity {
+    private String formato;
     private int gramatura;
     private String cor;
     private double preco;
@@ -14,20 +15,12 @@ public class VarianteProduto {
     @JoinColumn(name = "id_produto")
     private Produto produto;
 
-    public Long getId() {
-        return id;
+    public String getFormato() {
+        return formato;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setFormato(String formato) {
+        this.formato = formato;
     }
 
     public int getGramatura() {
@@ -52,6 +45,14 @@ public class VarianteProduto {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
 }

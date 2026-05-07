@@ -27,9 +27,6 @@ public class SketchbookRepository implements PanacheRepository<Sketchbook> {
         return find("SELECT s FROM Sketchbook s WHERE s.capa = ?1", capa).list();
     }
 
-    public List<Sketchbook> findByCategoria(Long idCategoria) {
-        return find("SELECT s FROM Sketchbook s JOIN s.categorias c WHERE c.id = ?1", idCategoria).list();
-    }
 
     public List<Sketchbook> findByMarca(Long idMarca) {
         return find("SELECT s FROM Sketchbook s WHERE s.marca.id = ?1", idMarca).list();

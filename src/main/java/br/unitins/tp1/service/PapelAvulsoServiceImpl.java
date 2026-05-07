@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.unitins.tp1.dto.PapelAvulsoDTO;
 import br.unitins.tp1.dto.PapelAvulsoDTOResponse;
-import br.unitins.tp1.model.Categoria;
+
 import br.unitins.tp1.model.PapelAvulso;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.PapelAvulsoRepository;
@@ -33,10 +33,6 @@ public class PapelAvulsoServiceImpl implements PapelAvulsoService{
        return PapelAvulsoDTOResponse.valueOf(papelavulso);
     }
 
-    @Override
-    public List<PapelAvulso> findByCategoria(Categoria categoria) {
-        return repository.findByCategoria(categoria);
-    } 
 
     @Override
     public PapelAvulsoDTOResponse create(PapelAvulsoDTO dto) {

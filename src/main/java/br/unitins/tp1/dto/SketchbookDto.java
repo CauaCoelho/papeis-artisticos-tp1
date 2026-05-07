@@ -5,7 +5,6 @@ public record SketchbookDTO(
         Long idCapa,
         Integer quantidadeFolhas,
         Long idTextura,
-        Long idMarca,
-        Long idCategoria) {
+        Long idMarca) {
 
 }

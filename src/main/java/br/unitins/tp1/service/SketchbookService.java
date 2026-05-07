@@ -17,7 +17,6 @@ public interface SketchbookService {
 
     List<Sketchbook> findByCapa(Capa capa);
 
-    List<Sketchbook> findByCategoria(Long idCategoria);
 
     Sketchbook findById(Long id);
 

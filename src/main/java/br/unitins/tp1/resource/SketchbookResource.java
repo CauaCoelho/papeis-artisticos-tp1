@@ -73,11 +73,6 @@ public class SketchbookResource {
         return Response.noContent().build();
     }
 
-    @GET
-    @Path("/find/categoria/{idCategoria}")
-    public List<Sketchbook> buscarPorCategoria(@PathParam("idCategoria") Long idCategoria) {
-        return service.findByCategoria(idCategoria);
-    }
 
     @GET
     @Path("/find/marca/{idMarca}")

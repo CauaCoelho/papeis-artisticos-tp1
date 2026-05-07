@@ -5,10 +5,8 @@ import br.unitins.tp1.dto.PageResponse;
 import br.unitins.tp1.dto.SketchbookDTO;
 import br.unitins.tp1.dto.SketchbookDTOResponse;
 import br.unitins.tp1.model.Capa;
-import br.unitins.tp1.model.Categoria;
 import br.unitins.tp1.model.Sketchbook;
 import br.unitins.tp1.model.Textura;
-import br.unitins.tp1.repository.CategoriaRepository;
 import br.unitins.tp1.repository.MarcaRepository;
 import br.unitins.tp1.repository.SketchbookRepository;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
@@ -24,8 +22,6 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Inject
     MarcaRepository marcaRepository;
 
-    @Inject
-    CategoriaRepository categoriaRepository;
 
     @Override
     public PageResponse<SketchbookDTOResponse> findAll(int page, int pageSize) {
@@ -63,10 +59,6 @@ public class SketchbookServiceImpl implements SketchbookService {
         return sketchbook;
     }
 
-    @Override
-    public List<Sketchbook> findByCategoria(Long idCategoria) {
-        return repository.findByCategoria(idCategoria);
-    }
 
     @Override
     public List<Sketchbook> findByMarca(Long idMarca) {
@@ -84,14 +76,7 @@ public class SketchbookServiceImpl implements SketchbookService {
             sketchbook.setMarca(marcaRepository.findById(dto.idMarca()));
         }
 
-        if (dto.idCategoria() != null) {
-            Categoria categoria = categoriaRepository.findById(dto.idCategoria());
-            if (categoria != null) {
-                List<Categoria> categorias = new java.util.ArrayList<>();
-                categorias.add(categoria);
-                sketchbook.setCategorias(categorias);
-            }
-        }
+
 
         repository.persist(sketchbook); // manter os dados no BD
         return sketchbook;
@@ -110,16 +95,7 @@ public class SketchbookServiceImpl implements SketchbookService {
             sketchbook.setMarca(null);
         }
 
-        if (dto.idCategoria() != null) {
-            Categoria categoria = categoriaRepository.findById(dto.idCategoria());
-            if (categoria != null) {
-                List<Categoria> categorias = new java.util.ArrayList<>();
-                categorias.add(categoria);
-                sketchbook.setCategorias(categorias);
-            }
-        } else {
-            sketchbook.setCategorias(null);
-        }
+
     }
 
     @Override

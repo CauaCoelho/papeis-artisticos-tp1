@@ -2,7 +2,6 @@
 
  abstract class Produto {
  -Long id 
- -Formato formato 
  -Textura textura 
  }
 
@@ -36,9 +35,7 @@ class varianteProduto{
  -Double comprimento
  }
 
- enum Categoria{
- -String nome
- }
+
  
  class EspecificacaoTecnica{
  -Double ph
@@ -55,7 +52,6 @@ enum Textura {
 -Integer gramatura
 }
 
-Produto <-- Categoria 
 
 
 Textura --* Produto

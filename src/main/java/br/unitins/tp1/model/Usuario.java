@@ -1,9 +1,11 @@
 package br.unitins.tp1.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
+@Entity
 public class Usuario extends DefaultEntity {
     private String nome;
 

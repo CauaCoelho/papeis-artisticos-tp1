@@ -3,7 +3,7 @@ package br.unitins.tp1.dto;
 import java.util.List;
 
 import br.unitins.tp1.model.Capa;
-import br.unitins.tp1.model.Categoria;
+
 import br.unitins.tp1.model.EspecificacaoTecnica;
 import br.unitins.tp1.model.Marca;
 import br.unitins.tp1.model.Sketchbook;
@@ -15,8 +15,7 @@ public record SketchbookDTOResponse(
         Integer quantidadeFolhas,
         Textura textura,
         EspecificacaoTecnica especificacaoTecnica,
-        Marca marca,
-        List<Categoria> categorias) {
+        Marca marca) {
 
     public static SketchbookDTOResponse valueOf(Sketchbook sketchbook) {
         return new SketchbookDTOResponse(
@@ -25,8 +24,7 @@ public record SketchbookDTOResponse(
                 sketchbook.getQuantidadeFolhas(),
                 sketchbook.getTextura(),
                 sketchbook.getEspecificacaoTecnica(),
-                sketchbook.getMarca(),
-                sketchbook.getCategorias());
+                sketchbook.getMarca());
     }
 
 }

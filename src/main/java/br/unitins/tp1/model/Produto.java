@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -12,10 +13,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -29,17 +28,15 @@ public class Produto extends DefaultEntity {
     @ManyToOne
     private Marca marca;
 
-    @ManyToMany
-    @JoinTable(name = "produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
-    @JsonManagedReference
-    private List<Categoria> categorias = new ArrayList<>();
     @Embedded
     private EspecificacaoTecnica especificacaoTecnica;
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VarianteProduto> varianteProdutos;
 
     public Textura getTextura() {
         return textura;
     }
-    
+
     public void setTextura(Textura textura) {
         this.textura = textura;
     }
@@ -52,20 +49,20 @@ public class Produto extends DefaultEntity {
         this.marca = marca;
     }
 
-    public List<Categoria> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
-    }
-
     public EspecificacaoTecnica getEspecificacaoTecnica() {
         return especificacaoTecnica;
     }
 
     public void setEspecificacaoTecnica(EspecificacaoTecnica especificacaoTecnica) {
         this.especificacaoTecnica = especificacaoTecnica;
+    }
+
+    public List<VarianteProduto> getVarianteProdutos() {
+        return varianteProdutos;
+    }
+
+    public void setVarianteProdutos(List<VarianteProduto> varianteProdutos) {
+        this.varianteProdutos = varianteProdutos;
     }
 
 }
