@@ -4,9 +4,9 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Compra extends DefaultEntity {
@@ -14,7 +14,7 @@ public class Compra extends DefaultEntity {
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
     private List<ItemPedido> itens;
     @ManyToOne
-    @JoinColumn(name = "id_cliente") // Sempre que atributo for outra entidade, é preciso especificar a relação
+    @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
     public FormaDePagamento getFormaDePagamento() {
