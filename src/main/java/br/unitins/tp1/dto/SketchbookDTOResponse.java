@@ -15,7 +15,8 @@ public record SketchbookDTOResponse(
         Integer quantidadeFolhas,
         Textura textura,
         EspecificacaoTecnica especificacaoTecnica,
-        Marca marca) {
+        Marca marca,
+        String nomeImagem) {
 
     public static SketchbookDTOResponse valueOf(Sketchbook sketchbook) {
         return new SketchbookDTOResponse(
@@ -24,7 +25,7 @@ public record SketchbookDTOResponse(
                 sketchbook.getQuantidadeFolhas(),
                 sketchbook.getTextura(),
                 sketchbook.getEspecificacaoTecnica(),
-                sketchbook.getMarca());
+                sketchbook.getMarca(),
+                sketchbook.getNomeImagem());
     }
-
 }

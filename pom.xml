@@ -82,7 +82,11 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-smallrye-jwt-build</artifactId>
         </dependency>
-
+        <!--testcontainers: usado pelo SeaweedFSDevService no perfil dev-->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-multipart-provider</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

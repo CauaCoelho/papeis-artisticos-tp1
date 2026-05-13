@@ -21,8 +21,17 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.PATCH;
 
+import org.jboss.resteasy.reactive.RestForm;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
+
+import br.unitins.tp1.service.FileService;
+import java.io.IOException;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
 @Path("/papeis")
 @Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
 @Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
@@ -32,6 +41,8 @@ public class ProdutoResource {
     @Inject //injeção de dependência
     ProdutoService service;
 
+    @Inject
+    FileService fileService;
     @GET
     public Response buscarTodos(
         @QueryParam("page") @DefaultValue("0") int page,
@@ -66,5 +77,35 @@ public class ProdutoResource {
     public Response excluir(@PathParam("id")Long id){
         service.delete(id);
         return Response.noContent().build();
+    }
+
+    @GET
+    @Path("/image/download/{nomeImagem}")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response download(@PathParam("nomeImagem") String nomeImagem) {
+        ResponseBuilder response = Response.ok(fileService.download(nomeImagem));
+        response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
+        return response.build();
+    }
+
+    @PATCH
+    @Path("/image/upload")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response salvarImagem(
+            @RestForm("idProduto") 
+            @NotNull(message = "idProduto é obrigatório.")
+            @Min(value = 1, message = "idProduto deve ser maior ou igual a 1.")
+            Long idProduto,
+
+            @RestForm("file") 
+            @NotNull(message = "Arquivo de imagem é obrigatório.")
+            FileUpload file) {
+
+        try {
+            fileService.salvar(idProduto, file);
+            return Response.noContent().build();
+        } catch (IOException e) {
+            return Response.status(Status.CONFLICT).build();
+        }
     }
 }

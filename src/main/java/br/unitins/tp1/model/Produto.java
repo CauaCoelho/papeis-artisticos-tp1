@@ -11,8 +11,11 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -32,6 +35,8 @@ public class Produto extends DefaultEntity {
     private EspecificacaoTecnica especificacaoTecnica;
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VarianteProduto> varianteProdutos;
+
+    private String nomeImagem;
 
     public Textura getTextura() {
         return textura;
@@ -65,4 +70,11 @@ public class Produto extends DefaultEntity {
         this.varianteProdutos = varianteProdutos;
     }
 
+    public String getNomeImagem() {
+        return nomeImagem;
+    }
+
+    public void setNomeImagem(String nomeImagem) {
+        this.nomeImagem = nomeImagem;
+    }
 }

@@ -6,14 +6,15 @@ import br.unitins.tp1.model.Textura;
 public record BlocoDTOResponse(
     Long id,
     Integer quantidadeFolhas,
-    Textura textura
+    Textura textura,
+    String nomeImagem
 ) {
     public static BlocoDTOResponse valueOf(Bloco bloco){
         return new BlocoDTOResponse(
             bloco.getId(),
             bloco.getQuantidadeFolhas(),
-            bloco.getTextura()
+            bloco.getTextura(),
+            bloco.getNomeImagem()
         );
     }
-
 }

@@ -21,6 +21,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Response.Status;
 
 @Path("/sketchbooks")
@@ -73,10 +74,10 @@ public class SketchbookResource {
         return Response.noContent().build();
     }
 
-
     @GET
     @Path("/find/marca/{idMarca}")
     public List<Sketchbook> buscarPorMarca(@PathParam("idMarca") Long idMarca) {
         return service.findByMarca(idMarca);
     }
+
 }

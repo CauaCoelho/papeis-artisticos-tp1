@@ -6,14 +6,15 @@ import br.unitins.tp1.model.Textura;
 public record RoloDTOResponse(
     Long id,
     Textura textura,
-    Double comprimento
+    Double comprimento,
+    String nomeImagem
 ) {
     public static RoloDTOResponse valueOf(Rolo rolo){
         return new RoloDTOResponse(
             rolo.getId(),
             rolo.getTextura(),
-            rolo.getComprimento()
+            rolo.getComprimento(),
+            rolo.getNomeImagem()
         );
     }
-
 }

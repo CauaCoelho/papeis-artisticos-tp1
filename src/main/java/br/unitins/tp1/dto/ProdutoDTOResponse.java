@@ -12,7 +12,8 @@ public record ProdutoDTOResponse(
     Long id,
     Textura textura,
     Marca marca,
-    EspecificacaoTecnica especificacaoTecnica
+    EspecificacaoTecnica especificacaoTecnica,
+    String nomeImagem
 ) {
     public static ProdutoDTOResponse valueOf(Produto produto){
         if (produto == null)
@@ -21,10 +22,8 @@ public record ProdutoDTOResponse(
             produto.getId(),
             produto.getTextura(),
             produto.getMarca(),
-            produto.getEspecificacaoTecnica()
-           
-
+            produto.getEspecificacaoTecnica(),
+            produto.getNomeImagem()
         );
     }
-
 }
