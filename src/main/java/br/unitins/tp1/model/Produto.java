@@ -35,8 +35,9 @@ public class Produto extends DefaultEntity {
     private EspecificacaoTecnica especificacaoTecnica;
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VarianteProduto> varianteProdutos;
-
-    private String nomeImagem;
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "produto_arquivo", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "arquivo_id", unique = true))
+    private List<Arquivo> arquivos = new ArrayList<>();
 
     public Textura getTextura() {
         return textura;
@@ -70,11 +71,25 @@ public class Produto extends DefaultEntity {
         this.varianteProdutos = varianteProdutos;
     }
 
-    public String getNomeImagem() {
-        return nomeImagem;
+    public List<Arquivo> getArquivos() {
+        return arquivos;
     }
 
-    public void setNomeImagem(String nomeImagem) {
-        this.nomeImagem = nomeImagem;
+    public void setArquivos(List<Arquivo> arquivos) {
+        this.arquivos = arquivos;
+    }
+
+    public void addArquivo(Arquivo arquivo) {
+        if (arquivo == null) {
+            return;
+        }
+        arquivos.add(arquivo);
+    }
+
+    public void removeArquivo(Arquivo arquivo) {
+        if (arquivo == null) {
+            return;
+        }
+        arquivos.remove(arquivo);
     }
 }

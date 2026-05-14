@@ -80,11 +80,13 @@ public class ProdutoResource {
     }
 
     @GET
-    @Path("/image/download/{nomeImagem}")
+    @Path("/image/download/{fid}")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response download(@PathParam("nomeImagem") String nomeImagem) {
-        ResponseBuilder response = Response.ok(fileService.download(nomeImagem));
-        response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
+    public Response download(@PathParam("fid") String fid) {
+        br.unitins.tp1.service.ArquivoDownload download = fileService.download(fid);
+        ResponseBuilder response = Response.ok(download.content());
+        response.header("Content-Disposition", "attachment;filename=" + download.filename());
+        response.header("Content-Type", download.contentType());
         return response.build();
     }
 

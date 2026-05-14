@@ -16,7 +16,7 @@ public record SketchbookDTOResponse(
         Textura textura,
         EspecificacaoTecnica especificacaoTecnica,
         Marca marca,
-        String nomeImagem) {
+        List<ArquivoResponseDTO> imagens) {
 
     public static SketchbookDTOResponse valueOf(Sketchbook sketchbook) {
         return new SketchbookDTOResponse(
@@ -26,6 +26,6 @@ public record SketchbookDTOResponse(
                 sketchbook.getTextura(),
                 sketchbook.getEspecificacaoTecnica(),
                 sketchbook.getMarca(),
-                sketchbook.getNomeImagem());
+                sketchbook.getArquivos() == null ? java.util.Collections.emptyList() : sketchbook.getArquivos().stream().map(ArquivoResponseDTO::valueOf).toList());
     }
 }

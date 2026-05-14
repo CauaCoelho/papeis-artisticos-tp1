@@ -8,7 +8,7 @@ public record PapelAvulsoDTOResponse(
     String tipoPapel,
     String tamanho,
     Textura textura,
-    String nomeImagem
+    java.util.List<ArquivoResponseDTO> imagens
 ) {
     public static PapelAvulsoDTOResponse valueOf(PapelAvulso papelavulso){
         return new PapelAvulsoDTOResponse(
@@ -16,7 +16,7 @@ public record PapelAvulsoDTOResponse(
             papelavulso.getTipoPapel(),
             papelavulso.getTamanho(),
             papelavulso.getTextura(),
-            papelavulso.getNomeImagem()
+            papelavulso.getArquivos() == null ? java.util.Collections.emptyList() : papelavulso.getArquivos().stream().map(ArquivoResponseDTO::valueOf).toList()
         );
     }
 }

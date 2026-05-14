@@ -13,7 +13,7 @@ public record ProdutoDTOResponse(
     Textura textura,
     Marca marca,
     EspecificacaoTecnica especificacaoTecnica,
-    String nomeImagem
+    List<ArquivoResponseDTO> imagens
 ) {
     public static ProdutoDTOResponse valueOf(Produto produto){
         if (produto == null)
@@ -23,7 +23,7 @@ public record ProdutoDTOResponse(
             produto.getTextura(),
             produto.getMarca(),
             produto.getEspecificacaoTecnica(),
-            produto.getNomeImagem()
+            produto.getArquivos() == null ? java.util.Collections.emptyList() : produto.getArquivos().stream().map(ArquivoResponseDTO::valueOf).toList()
         );
     }
 }

@@ -7,14 +7,14 @@ public record RoloDTOResponse(
     Long id,
     Textura textura,
     Double comprimento,
-    String nomeImagem
+    java.util.List<ArquivoResponseDTO> imagens
 ) {
     public static RoloDTOResponse valueOf(Rolo rolo){
         return new RoloDTOResponse(
             rolo.getId(),
             rolo.getTextura(),
             rolo.getComprimento(),
-            rolo.getNomeImagem()
+            rolo.getArquivos() == null ? java.util.Collections.emptyList() : rolo.getArquivos().stream().map(ArquivoResponseDTO::valueOf).toList()
         );
     }
 }

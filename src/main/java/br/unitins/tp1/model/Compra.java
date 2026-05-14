@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 
@@ -16,6 +17,13 @@ public class Compra extends DefaultEntity {
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
+    @ManyToOne
+    @JoinColumn(name = "id_cupom")
+    private Cupom cupomAplicado;
+
+    @ManyToOne
+    @JoinColumn(name = "id_endereco_entrega")
+    private Endereco enderecoEntrega;
 
     public FormaDePagamento getFormaDePagamento() {
         return formaDePagamento;
@@ -39,6 +47,22 @@ public class Compra extends DefaultEntity {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Cupom getCupomAplicado() {
+        return cupomAplicado;
+    }
+
+    public void setCupomAplicado(Cupom cupomAplicado) {
+        this.cupomAplicado = cupomAplicado;
+    }
+
+    public Endereco getEnderecoEntrega() {
+        return enderecoEntrega;
+    }
+
+    public void setEnderecoEntrega(Endereco enderecoEntrega) {
+        this.enderecoEntrega = enderecoEntrega;
     }
 
 }
