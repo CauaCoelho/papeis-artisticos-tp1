@@ -1,6 +1,6 @@
 package br.unitins.tp1.dto;
 
-import br.unitins.tp1.model.Prioridade;
+import br.unitins.tp1.model.Perfil;
 import br.unitins.tp1.model.Administrador;
 
 public record AdministradorDTOResponse(
@@ -8,7 +8,7 @@ public record AdministradorDTOResponse(
         String nome,
         String login,
         String senha,
-        Prioridade prioridade) {
+        Perfil perfil) {
     public static AdministradorDTOResponse valueOf(Administrador administrador) {
         if (administrador == null)
             return null;
@@ -17,7 +17,7 @@ public record AdministradorDTOResponse(
                 administrador.getNome(),
                 administrador.getLogin(),
                 administrador.getSenha(),
-                administrador.getPrioridade());
+                administrador.getPerfil());
     }
 
 }

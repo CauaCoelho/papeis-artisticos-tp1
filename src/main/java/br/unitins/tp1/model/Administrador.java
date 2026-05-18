@@ -4,7 +4,7 @@ public class Administrador extends DefaultEntity {
     private String nome;
     private String login;
     private String senha;
-    private Prioridade prioridade;
+    private Perfil perfil;
 
     public String getNome() {
         return nome;
@@ -30,12 +30,12 @@ public class Administrador extends DefaultEntity {
         this.senha = senha;
     }
 
-    public Prioridade getPrioridade() {
-        return prioridade;
+    public Perfil getPerfil() {
+        return perfil;
     }
 
-    public void setPrioridade(Prioridade prioridade) {
-        this.prioridade = prioridade;
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 
 }

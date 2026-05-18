@@ -1,17 +1,22 @@
-/*package br.unitins.tp1.service;
+package br.unitins.tp1.service;
 
 import java.util.List;
 
 import br.unitins.tp1.dto.UsuarioDTO;
 import br.unitins.tp1.dto.UsuarioDTOResponse;
-import br.unitins.tp1.model.Usuario;
 
 public interface UsuarioService {
-    List<Usuario> findAll();
-    Usuario findByNome(String nome);
+    List<UsuarioDTOResponse> findAll();
+
+    UsuarioDTOResponse findByNome(String nome);
+
     UsuarioDTOResponse findById(Long id);
-    Usuario findByLogin(String login);
-    void update (Long id, UsuarioDTO dto);
-    void delete (Long id);
+
+    UsuarioDTOResponse findByLogin(String login);
+
+    UsuarioDTOResponse findByLoginAndSenha(String login, String senha);
+
+    void update(Long id, UsuarioDTO dto);
+
+    void delete(Long id);
 }
-    */

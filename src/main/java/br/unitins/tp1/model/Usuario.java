@@ -8,12 +8,12 @@ import jakarta.persistence.Enumerated;
 @Entity
 public class Usuario extends DefaultEntity {
     private String nome;
-
+    private String username;
     @Column(unique = true)
     private String login;
     private String senha;
     @Enumerated(EnumType.STRING)
-    private Prioridade prioridade;
+    private Perfil perfil;
 
     public String getNome() {
         return nome;
@@ -21,6 +21,14 @@ public class Usuario extends DefaultEntity {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getLogin() {
@@ -39,12 +47,12 @@ public class Usuario extends DefaultEntity {
         this.senha = senha;
     }
 
-    public Prioridade getPrioridade() {
-        return prioridade;
+    public Perfil getPerfil() {
+        return perfil;
     }
 
-    public void setPrioridade(Prioridade prioridade) {
-        this.prioridade = prioridade;
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 
 }
