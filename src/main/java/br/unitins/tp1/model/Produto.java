@@ -1,9 +1,8 @@
 package br.unitins.tp1.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,6 +22,11 @@ import jakarta.persistence.OneToMany;
 @Inheritance(strategy = InheritanceType.JOINED)
 
 public class Produto extends DefaultEntity {
+    private String nome;
+
+    private BigDecimal preco;
+
+    private int estoque;
 
     @Column(name = "textura_id", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -38,6 +42,30 @@ public class Produto extends DefaultEntity {
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "produto_arquivo", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "arquivo_id", unique = true))
     private List<Arquivo> arquivos = new ArrayList<>();
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public int getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
+    }
 
     public Textura getTextura() {
         return textura;

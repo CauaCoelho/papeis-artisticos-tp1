@@ -7,14 +7,14 @@
 
 -- Inserir produtos base para sketchbooks (herança JOINED)
 -- Não passamos o ID para a tabela pai (produto), deixando o BD gerar automaticamente
-insert into produto (textura_id) values ('LISO');
-insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_id_seq'), 100, 'PAPEL_COUCHE');
+insert into produto (nome, preco, estoque, textura_id) values ('Sketchbook Kim Jung Gi Edition', 200.00, 10, 'LISO');
+insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_id_seq'), 100, 'COURO');
 
-insert into produto (textura_id) values ('TRANCADO');
+insert into produto (nome, preco, estoque, textura_id) values ('Sketchbook Moleskine', 65.50, 15, 'TRANCADO');
 insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_id_seq'), 98, 'BROCHURA');
 
-insert into produto (textura_id) values ('KRAFT');
+insert into produto (nome, preco, estoque, textura_id) values ('Sketchbook Rústico', 45.00, 20, 'KRAFT');
 insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_id_seq'), 54, 'COURO');
 
-insert into produto (textura_id) values ('CASCA_DE_OVO');
+insert into produto (nome, preco, estoque, textura_id) values ('Sketchbook Artístico', 120.00, 5, 'CASCA_DE_OVO');
 insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_id_seq'), 75, 'CARTAO');
