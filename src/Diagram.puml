@@ -92,14 +92,20 @@ class Compra {
 
 class Administrador {}
 
-enum Prioridade{
+enum Perfil{
 ALTA ""
 BAIXA ""
 }
-
+class Cupom {
+  -String codigo 
+  -LocalDateTime validade
+  -List<Produto> produtosPermitidos
+}
+Usuario <-- Perfil
 Compra <-- Cliente
 Compra *-- Produto
 Compra *-- FormaDePagamento
+Compra *-- Cupom
 
 Usuario <|-- Administrador
 Usuario <|-- Cliente

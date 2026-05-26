@@ -2,7 +2,7 @@ package br.unitins.tp1.resource;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import br.unitins.tp1.dto.AuthResponseDTO;
+import br.unitins.tp1.dto.AuthDTOResponse;
 import br.unitins.tp1.dto.AuthUsuarioDTO;
 import br.unitins.tp1.dto.UsuarioDTOResponse;
 import br.unitins.tp1.service.HashService;
@@ -42,7 +42,7 @@ public class AuthResource {
     public Response login(@Valid AuthUsuarioDTO authDTO) {
         UsuarioDTOResponse usuario = autenticar(authDTO);
         String token = jwtService.generateJwt(usuario);
-        return Response.ok(new AuthResponseDTO(token, "Bearer")).build();
+        return Response.ok(new AuthDTOResponse(token, "Bearer")).build();
     }
 
     @GET
