@@ -24,38 +24,43 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
 @Path("/sketchbooks")
-@Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
-@Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
+@Produces(MediaType.APPLICATION_JSON) // Tipo de conteúdo que vai ser produzido
+@Consumes(MediaType.APPLICATION_JSON) // Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para
+                                      // todos os métodos
 public class SketchbookResource {
 
-
-    @Inject //injeção de dependência
+    @Inject // injeção de dependência
     SketchbookService service;
 
     @GET
     public Response buscarTodos(
-        @QueryParam("page") @DefaultValue("0") int page,
-        @QueryParam("pageSize") @DefaultValue("10") int pageSize
-    ) {
+            @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
         return Response.ok(service.findAll(page, pageSize)).build();
     }
 
     @GET
-    @Path ("/find/{textura}") //Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
-    public List <Sketchbook> buscarPorTextura (Textura textura) {
+    @Path("/{id}")
+    public Response buscarPorId(@PathParam("id") Long id) {
+        return Response.ok(service.findById(id)).build();
+    }
+
+    @GET
+    @Path("/find/{textura}") // Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
+    public List<Sketchbook> buscarPorTextura(Textura textura) {
         return service.findByTextura(textura);
     }
 
     @POST
     @Transactional
-    public Response incluir (SketchbookDTO dto){
+    public Response incluir(SketchbookDTO dto) {
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response editar(@PathParam("id")Long id, @Valid SketchbookDTO dto){
+    public Response editar(@PathParam("id") Long id, @Valid SketchbookDTO dto) {
         service.update(id, dto);
         return Response.noContent().build();
     }
@@ -63,13 +68,15 @@ public class SketchbookResource {
     @DELETE
     @Path("/{id}")
     @Transactional
-    public Response excluir(@PathParam("id")Long id){
+    public Response excluir(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
     }
+
     @GET
-    @Path("/count")
-    public long count(){
-        return service.count();
+    @Path("/find/marca/{idMarca}")
+    public List<Sketchbook> buscarPorMarca(@PathParam("idMarca") Long idMarca) {
+        return service.findByMarca(idMarca);
     }
+
 }

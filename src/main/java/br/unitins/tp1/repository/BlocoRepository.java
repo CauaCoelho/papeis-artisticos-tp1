@@ -3,8 +3,9 @@ package br.unitins.tp1.repository;
 import java.util.List;
 
 import br.unitins.tp1.model.Bloco;
-import br.unitins.tp1.model.Categoria;
+
 import br.unitins.tp1.model.Textura;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -16,8 +17,11 @@ public class BlocoRepository implements PanacheRepository<Bloco> { // padroniza 
         return find("SELECT b FROM Bloco b WHERE b.bloco LIKE ?1", "%" + bloco + "%").list();
     }
 
-    public List<Bloco> findByNome(String nome) {
-        return find("LOWER(nome) LIKE ?1", "%" + nome.toLowerCase() + "%").list();
+    public PanacheQuery<Bloco> findByNome(String nome){
+        if (nome == null || nome.isEmpty()) {
+            return null;
+        }
+        return find("UPPER(nome) LIKE ?1", "%" + nome.toUpperCase() + "%");
     }
 
     public List<Bloco> findByTextura(Textura textura) {
@@ -28,7 +32,4 @@ public class BlocoRepository implements PanacheRepository<Bloco> { // padroniza 
         return find("SELECT b FROM Bloco b WHERE b.quantidadeFolhas = ?1", quantidadeFolhas).list();
     }
 
-    public List<Bloco> findByCategoria(Categoria categoria) {
-        return find("SELECT s FROM Bloco s WHERE p.categoria LIKE ?1", "%" + categoria + "%").list();
-    }
 }

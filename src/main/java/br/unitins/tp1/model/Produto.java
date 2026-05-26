@@ -1,26 +1,32 @@
 package br.unitins.tp1.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 
 public class Produto extends DefaultEntity {
+    private String nome;
+
+    private BigDecimal preco;
+
+    private int estoque;
 
     @Column(name = "textura_id", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -29,17 +35,42 @@ public class Produto extends DefaultEntity {
     @ManyToOne
     private Marca marca;
 
-    @ManyToMany
-    @JoinTable(name = "produto_categoria", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
-    @JsonManagedReference
-    private List<Categoria> categorias = new ArrayList<>();
     @Embedded
     private EspecificacaoTecnica especificacaoTecnica;
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VarianteProduto> varianteProdutos;
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "produto_arquivo", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "arquivo_id", unique = true))
+    private List<Arquivo> arquivos = new ArrayList<>();
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public int getEstoque() {
+        return estoque;
+    }
+
+    public void setEstoque(int estoque) {
+        this.estoque = estoque;
+    }
 
     public Textura getTextura() {
         return textura;
     }
-    
+
     public void setTextura(Textura textura) {
         this.textura = textura;
     }
@@ -52,14 +83,6 @@ public class Produto extends DefaultEntity {
         this.marca = marca;
     }
 
-    public List<Categoria> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
-    }
-
     public EspecificacaoTecnica getEspecificacaoTecnica() {
         return especificacaoTecnica;
     }
@@ -68,4 +91,33 @@ public class Produto extends DefaultEntity {
         this.especificacaoTecnica = especificacaoTecnica;
     }
 
+    public List<VarianteProduto> getVarianteProdutos() {
+        return varianteProdutos;
+    }
+
+    public void setVarianteProdutos(List<VarianteProduto> varianteProdutos) {
+        this.varianteProdutos = varianteProdutos;
+    }
+
+    public List<Arquivo> getArquivos() {
+        return arquivos;
+    }
+
+    public void setArquivos(List<Arquivo> arquivos) {
+        this.arquivos = arquivos;
+    }
+
+    public void addArquivo(Arquivo arquivo) {
+        if (arquivo == null) {
+            return;
+        }
+        arquivos.add(arquivo);
+    }
+
+    public void removeArquivo(Arquivo arquivo) {
+        if (arquivo == null) {
+            return;
+        }
+        arquivos.remove(arquivo);
+    }
 }

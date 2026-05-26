@@ -1,26 +1,28 @@
 package br.unitins.tp1.model;
 
-public class VarianteProduto {
-    private Long id;
-    private String nome;
+import java.math.BigDecimal;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
+public class VarianteProduto extends DefaultEntity {
+    private String formato;
     private int gramatura;
     private String cor;
-    private double preco;
+    private BigDecimal preco;
 
-    public Long getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "id_produto")
+    private Produto produto;
+
+    public String getFormato() {
+        return formato;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setFormato(String formato) {
+        this.formato = formato;
     }
 
     public int getGramatura() {
@@ -39,12 +41,20 @@ public class VarianteProduto {
         this.cor = cor;
     }
 
-    public double getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(BigDecimal preco) {
         this.preco = preco;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
 }

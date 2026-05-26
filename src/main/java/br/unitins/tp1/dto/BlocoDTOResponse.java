@@ -6,14 +6,15 @@ import br.unitins.tp1.model.Textura;
 public record BlocoDTOResponse(
     Long id,
     Integer quantidadeFolhas,
-    Textura textura
+    Textura textura,
+    java.util.List<ArquivoResponseDTO> imagens
 ) {
     public static BlocoDTOResponse valueOf(Bloco bloco){
         return new BlocoDTOResponse(
             bloco.getId(),
             bloco.getQuantidadeFolhas(),
-            bloco.getTextura()
+            bloco.getTextura(),
+            bloco.getArquivos() == null ? java.util.Collections.emptyList() : bloco.getArquivos().stream().map(ArquivoResponseDTO::valueOf).toList()
         );
     }
-
 }

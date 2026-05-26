@@ -36,13 +36,7 @@ public class BlocoResource {
     public Response buscarTodos(
             @QueryParam("page") @DefaultValue("0") int page,
             @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
-        return Response.ok(service.findAll()).build();
-    }
-
-    @GET
-    @Path("/search")
-    public Response buscarPorNome(@QueryParam("nome") String nome) {
-        return Response.ok(service.findByNome(nome)).build();
+        return Response.ok(service.findAll(page, pageSize)).build();
     }
 
     @GET
