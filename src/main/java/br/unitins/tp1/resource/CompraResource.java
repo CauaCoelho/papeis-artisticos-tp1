@@ -53,7 +53,6 @@ public class CompraResource {
      * @return Resposta com a compra criada
      */
     @POST
-    @Authenticated
     @RolesAllowed("USER")
     @Transactional
     public Response realizarCompra(CompraDTO dto) {
@@ -78,7 +77,6 @@ public class CompraResource {
      * @return Página com compras
      */
     @GET
-    @Authenticated
     @RolesAllowed("ADMIN")
     public Response consultarCompras(
             @QueryParam("page") @DefaultValue("0") int page,
@@ -95,7 +93,6 @@ public class CompraResource {
      */
     @GET
     @Path("/me")
-    @Authenticated
     @RolesAllowed("USER")
     public Response minhasCompras(
             @QueryParam("page") @DefaultValue("0") int page,
@@ -124,7 +121,6 @@ public class CompraResource {
      */
     @GET
     @Path("/{id}")
-    @Authenticated
     @RolesAllowed({"USER", "ADMIN"})
     public Response buscarCompra(@PathParam("id") Long id) {
         CompraDTOResponse compra = compraService.findById(id);

@@ -8,7 +8,6 @@ package br.unitins.tp1.dto;
 public record UsuarioDTO(
         String nome,
         String login,
-        String username,
         int idPerfil) {
 
 }

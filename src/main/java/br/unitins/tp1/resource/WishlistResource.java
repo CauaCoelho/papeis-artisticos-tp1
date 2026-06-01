@@ -56,7 +56,6 @@ public class WishlistResource {
      */
     @POST
     @Path("/{produtoId}")
-    @Authenticated
     @RolesAllowed("USER")
     @Transactional
     public Response adicionar(@PathParam("produtoId") Long produtoId) {
@@ -75,7 +74,6 @@ public class WishlistResource {
      * @return Lista de itens da wishlist
      */
     @GET
-    @Authenticated
     @RolesAllowed("USER")
     public Response listar() {
         // Extrai o usuário do token JWT
@@ -93,7 +91,6 @@ public class WishlistResource {
      */
     @DELETE
     @Path("/{produtoId}")
-    @Authenticated
     @RolesAllowed("USER")
     @Transactional
     public Response remover(@PathParam("produtoId") Long produtoId) {

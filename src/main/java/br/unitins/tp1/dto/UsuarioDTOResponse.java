@@ -6,8 +6,8 @@ import br.unitins.tp1.model.Usuario;
 public record UsuarioDTOResponse(
         Long id,
         String nome,
-        String login,
         String username,
+        String login,
         Perfil perfil) {
     public static UsuarioDTOResponse valueOf(Usuario usuario) {
         if (usuario == null)
@@ -15,8 +15,8 @@ public record UsuarioDTOResponse(
         return new UsuarioDTOResponse(
                 usuario.getId(),
                 usuario.getNome(),
-                usuario.getLogin(),
                 usuario.getUsername(),
+                usuario.getLogin(),
                 usuario.getPerfil());
     }
 

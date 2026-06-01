@@ -59,13 +59,13 @@ public class KeycloakUserProvisioningServiceImpl implements KeycloakUserProvisio
     private final HttpClient httpClient = HttpClient.newBuilder().build();
 
     @Override
-    public void createUser(UsuarioDTO dto) {
+    public void createUser(UsuarioDTO dto, String senha) {
         String accessToken = getAdminAccessToken();
         HttpResponse<String> createResponse = send(HttpRequest.newBuilder(usersEndpoint())
                 .header("Authorization", "Bearer " + accessToken)
                 .header("Content-Type", "application/json")
                 .timeout(Duration.ofMillis(requestTimeoutMs))
-                .POST(HttpRequest.BodyPublishers.ofString(buildCreateUserPayload(dto)))
+                .POST(HttpRequest.BodyPublishers.ofString(buildCreateUserPayload(dto, senha)))
                 .build());
 
         if (createResponse.statusCode() == 409) {
@@ -187,10 +187,10 @@ public class KeycloakUserProvisioningServiceImpl implements KeycloakUserProvisio
         }
     }
 
-    private String buildCreateUserPayload(UsuarioDTO dto) {
+    private String buildCreateUserPayload(UsuarioDTO dto, String senha) {
         ObjectNode payload = objectMapper.createObjectNode();
-        payload.put("username", dto.nome());
-        payload.put("firstName", resolveFirstName(dto.nome(), dto.username()));
+        payload.put("username", dto.login());
+        payload.put("firstName", resolveFirstName(dto.nome()));
         payload.put("lastName", resolveLastName(dto.nome()));
         payload.put("email", dto.login() + "@tp2.local");
         payload.put("enabled", true);
@@ -198,7 +198,7 @@ public class KeycloakUserProvisioningServiceImpl implements KeycloakUserProvisio
 
         ObjectNode credential = objectMapper.createObjectNode();
         credential.put("type", "password");
-        credential.put("value", dto.senha());
+        credential.put("value", senha);
         credential.put("temporary", false);
 
         ArrayNode credentials = objectMapper.createArrayNode();
@@ -218,9 +218,9 @@ public class KeycloakUserProvisioningServiceImpl implements KeycloakUserProvisio
         return roles;
     }
 
-    private String resolveFirstName(String nome, String username) {
+    private String resolveFirstName(String nome) {
         if (nome == null || nome.isBlank()) {
-            return username;
+            return "Usuario";
         }
 
         String[] partes = nome.trim().split("\\s+", 2);

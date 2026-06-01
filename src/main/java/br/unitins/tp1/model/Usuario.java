@@ -11,6 +11,7 @@ public class Usuario extends DefaultEntity {
     
     @Column(unique = true)
     private String login;
+    private String username;
     
     /**
      * ID do usuário no Keycloak (sub claim do JWT)
@@ -21,8 +22,7 @@ public class Usuario extends DefaultEntity {
     
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
-    private String username;
-    
+
     public String getNome() {
         return nome;
     }
