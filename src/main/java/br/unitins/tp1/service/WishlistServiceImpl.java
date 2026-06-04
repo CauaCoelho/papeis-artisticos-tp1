@@ -32,27 +32,24 @@ public class WishlistServiceImpl implements WishlistService {
         // Verifica se o produto já está na wishlist
         if (repository.existsByUsuarioAndProduto(usuarioId, dto.produtoId())) {
             throw new WebApplicationException(
-                "Produto já existe na wishlist",
-                Status.CONFLICT
-            );
+                    "Produto já existe na wishlist",
+                    Status.CONFLICT);
         }
 
         // Busca o usuário
         Cliente usuario = clienteRepository.findById(usuarioId);
         if (usuario == null) {
             throw new WebApplicationException(
-                "Usuário não encontrado",
-                Status.NOT_FOUND
-            );
+                    "Usuário não encontrado",
+                    Status.NOT_FOUND);
         }
 
         // Busca o produto
         Produto produto = produtoRepository.findById(dto.produtoId());
         if (produto == null) {
             throw new WebApplicationException(
-                "Produto não encontrado",
-                Status.NOT_FOUND
-            );
+                    "Produto não encontrado",
+                    Status.NOT_FOUND);
         }
 
         // Cria a wishlist
@@ -68,8 +65,8 @@ public class WishlistServiceImpl implements WishlistService {
     @Override
     public List<WishlistDTOResponse> listar(Long usuarioId) {
         return repository.findByUsuarioId(usuarioId).stream()
-            .map(WishlistDTOResponse::valueOf)
-            .toList();
+                .map(WishlistDTOResponse::valueOf)
+                .toList();
     }
 
     @Override
@@ -77,9 +74,8 @@ public class WishlistServiceImpl implements WishlistService {
         long deletados = repository.deleteByUsuarioAndProduto(usuarioId, produtoId);
         if (deletados == 0) {
             throw new WebApplicationException(
-                "Item não encontrado na wishlist",
-                Status.NOT_FOUND
-            );
+                    "Item não encontrado na wishlist",
+                    Status.NOT_FOUND);
         }
     }
 }

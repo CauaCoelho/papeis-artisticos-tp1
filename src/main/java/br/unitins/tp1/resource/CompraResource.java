@@ -5,6 +5,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import br.unitins.tp1.dto.CompraDTO;
 import br.unitins.tp1.dto.CompraDTOResponse;
 import br.unitins.tp1.service.CompraService;
+import br.unitins.tp1.service.UsuarioLogadoService;
 import br.unitins.tp1.service.UsuarioService;
 import io.quarkus.security.Authenticated;
 import jakarta.annotation.security.RolesAllowed;
@@ -38,12 +39,15 @@ public class CompraResource {
 
     @Inject
     CompraService compraService;
-    
+
     @Inject
     UsuarioService usuarioService;
-    
+
     @Inject
     JsonWebToken jwt;
+
+    @Inject
+    UsuarioLogadoService usuarioLogadoService;
 
     /**
      * Realiza uma nova compra.
@@ -60,9 +64,8 @@ public class CompraResource {
         var usuarioDTOResponse = usuarioService.findBySub(sub);
         if (usuarioDTOResponse == null) {
             throw new jakarta.ws.rs.WebApplicationException(
-                "Usuário não encontrado",
-                Status.UNAUTHORIZED
-            );
+                    "Usuário não encontrado",
+                    Status.UNAUTHORIZED);
         }
 
         CompraDTOResponse compra = compraService.create(usuarioDTOResponse.id(), dto);
@@ -72,7 +75,7 @@ public class CompraResource {
     /**
      * Lista todas as compras (somente admin).
      * 
-     * @param page Número da página (0-based)
+     * @param page     Número da página (0-based)
      * @param pageSize Tamanho da página
      * @return Página com compras
      */
@@ -87,7 +90,7 @@ public class CompraResource {
     /**
      * Lista as compras do usuário autenticado.
      * 
-     * @param page Número da página (0-based)
+     * @param page     Número da página (0-based)
      * @param pageSize Tamanho da página
      * @return Página com compras do usuário
      */
@@ -97,19 +100,15 @@ public class CompraResource {
     public Response minhasCompras(
             @QueryParam("page") @DefaultValue("0") int page,
             @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
-        
-        // Extrai o usuário do token JWT
-        String sub = jwt.getSubject();
-        var usuarioDTOResponse = usuarioService.findBySub(sub);
-        
-        if (usuarioDTOResponse == null) {
-            throw new jakarta.ws.rs.WebApplicationException(
-                "Usuário não encontrado",
-                Status.UNAUTHORIZED
-            );
-        }
-        
-        return Response.ok(compraService.findByUsuario(usuarioDTOResponse.id(), page, pageSize)).build();
+
+        Long usuarioId = usuarioLogadoService.getIdUsuarioLogado();
+
+        return Response.ok(
+                compraService.findByUsuario(
+                        usuarioId,
+                        page,
+                        pageSize))
+                .build();
     }
 
     /**
@@ -121,14 +120,14 @@ public class CompraResource {
      */
     @GET
     @Path("/{id}")
-    @RolesAllowed({"USER", "ADMIN"})
+    @RolesAllowed({ "USER", "ADMIN" })
     public Response buscarCompra(@PathParam("id") Long id) {
         CompraDTOResponse compra = compraService.findById(id);
-        
+
         if (compra == null) {
             return Response.status(Status.NOT_FOUND).build();
         }
-        
+
         return Response.ok(compra).build();
     }
 }

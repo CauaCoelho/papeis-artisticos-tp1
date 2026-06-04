@@ -1,18 +1,16 @@
 package br.unitins.tp1.resource;
 
-import java.util.List;
-
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import br.unitins.tp1.dto.WishlistDTO;
 import br.unitins.tp1.dto.WishlistDTOResponse;
+import br.unitins.tp1.model.Usuario;
+import br.unitins.tp1.service.UsuarioLogadoService;
 import br.unitins.tp1.service.UsuarioService;
 import br.unitins.tp1.service.WishlistService;
-import io.quarkus.security.Authenticated;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -20,6 +18,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -44,6 +43,8 @@ public class WishlistResource {
 
     @Inject
     UsuarioService usuarioService;
+    @Inject
+    UsuarioLogadoService usuarioLogadoService;
 
     @Inject
     JsonWebToken jwt;
@@ -77,10 +78,8 @@ public class WishlistResource {
     @RolesAllowed("USER")
     public Response listar() {
         // Extrai o usuário do token JWT
-        Long usuarioId = obterIdUsuarioDoToken();
-
-        List<WishlistDTOResponse> wishlist = service.listar(usuarioId);
-        return Response.ok(wishlist).build();
+        Usuario usuario = usuarioLogadoService.getUsuarioLogado();
+        return Response.ok(service.listar(usuario.getId())).build();
     }
 
     /**
@@ -110,14 +109,13 @@ public class WishlistResource {
     private Long obterIdUsuarioDoToken() {
         String sub = jwt.getSubject();
         var usuarioDTOResponse = usuarioService.findBySub(sub);
-        
+
         if (usuarioDTOResponse == null) {
             throw new jakarta.ws.rs.WebApplicationException(
-                "Usuário não encontrado",
-                Status.UNAUTHORIZED
-            );
+                    "Usuário não encontrado",
+                    Status.UNAUTHORIZED);
         }
-        
+
         return usuarioDTOResponse.id();
     }
 }

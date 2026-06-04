@@ -1,5 +1,4 @@
-/*package br.unitins.tp1.resource;
-
+package br.unitins.tp1.resource;
 
 import br.unitins.tp1.dto.UsuarioDTO;
 import br.unitins.tp1.dto.UsuarioDTOResponse;
@@ -20,32 +19,32 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/usuarios")
-@Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
-@Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
+@Produces(MediaType.APPLICATION_JSON) // Tipo de conteúdo que vai ser produzido
+@Consumes(MediaType.APPLICATION_JSON) // Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para
+                                      // todos os métodos
 public class UsuarioResource {
 
-
-    @Inject //injeção de dependência
+    @Inject // injeção de dependência
     UsuarioService service;
 
     @GET
     public Response buscarTodos(
-        @QueryParam("page") @DefaultValue("0") int page,
-        @QueryParam("pageSize") @DefaultValue("10") int pageSize
-    ) {
+            @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
         return Response.ok(service.findAll()).build();
     }
 
     @GET
-    @Path ("/find/{textura}") //Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
-    public UsuarioDTOResponse buscarPorId (Long id) {
+    @Path("/{id}")
+    public UsuarioDTOResponse buscarPorId(
+            @PathParam("id") Long id) {
         return service.findById(id);
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response editar(@PathParam("id")Long id, @Valid UsuarioDTO dto){
+    public Response editar(@PathParam("id") Long id, @Valid UsuarioDTO dto) {
         service.update(id, dto);
         return Response.noContent().build();
     }
@@ -53,8 +52,8 @@ public class UsuarioResource {
     @DELETE
     @Path("/{id}")
     @Transactional
-    public Response excluir(@PathParam("id")Long id){
+    public Response excluir(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
     }
-}*/
+}
