@@ -29,7 +29,6 @@ import org.jboss.resteasy.reactive.RestForm;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import br.unitins.tp1.service.FileService;
-import java.io.IOException;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Min;
 
@@ -50,6 +49,12 @@ public class ProdutoResource {
             @QueryParam("page") @DefaultValue("0") int page,
             @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
         return Response.ok(service.findAll()).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Response buscarPorId(@PathParam("id") Long id) {
+        return Response.ok(service.findById(id)).build();
     }
 
     @GET

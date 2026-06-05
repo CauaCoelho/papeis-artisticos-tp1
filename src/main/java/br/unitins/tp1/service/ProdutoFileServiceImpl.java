@@ -59,15 +59,24 @@ public class ProdutoFileServiceImpl implements FileService {
     @Override
     @Transactional
     public void salvar(Long id, FileUpload file) throws IOException {
+        System.out.println("=== INICIO SALVAR ===");
+        System.out.println("ID: " + id);
+        System.out.println("File: " + (file == null ? "NULL" : file.fileName()));
+        System.out.println("File path: " + (file == null ? "NULL" : file.uploadedFile()));
+        System.out.println("File size: " + (file == null ? "NULL" : file.size()));
         Produto produto = produtoRepository.findById(id);
+        System.out.println("Produto: " + (produto == null ? "NULL" : produto.getNome()));
+
         if (produto == null) {
             throw new NotFoundException("Produto não encontrado.");
         }
-
+        System.out.println("Antes validarTamanho");
         validarTamanho(file);
+        System.out.println("Antes validarExtensao");
         validarExtensao(file);
-
+        System.out.println("Antes uploadParaSeaweed");
         String fid = uploadParaSeaweed(file);
+        System.out.println("FID retornado: " + fid);
         Arquivo arquivo = buildArquivoEntity(file, fid);
         arquivoRepository.persist(arquivo);
         produto.addArquivo(arquivo);
@@ -92,6 +101,9 @@ public class ProdutoFileServiceImpl implements FileService {
     }
 
     private String uploadParaSeaweed(FileUpload file) throws IOException {
+        System.out.println("=== INICIO uploadParaSeaweed ===");
+        System.out.println("masterUrl: " + masterUrl);
+        System.out.println("URL assign: " + masterUrl + "/dir/assign");
         String fileName = Paths.get(file.fileName()).getFileName().toString();
         String extension = getExtension(fileName);
         String normalizedName = UUID.randomUUID() + (extension == null ? "" : "." + extension.toLowerCase(Locale.ROOT));
@@ -262,6 +274,16 @@ public class ProdutoFileServiceImpl implements FileService {
 
         try {
             HttpResponse<String> response = httpClient.send(builder.build(), HttpResponse.BodyHandlers.ofString());
+            // ← Adicione esses logs
+            System.out.println("=== SeaweedFS Response ===");
+            System.out.println("URL: " + url);
+            System.out.println("Status: " + response.statusCode());
+            System.out.println("Body: " + response.body());
+            System.out.println("=========================");
+
+            if (response.statusCode() == 404) {
+                throw new WebApplicationException("Recurso não encontrado no SeaweedFS.", Response.Status.NOT_FOUND);
+            }
             if (response.statusCode() < 200 || response.statusCode() >= 300) {
                 throw new WebApplicationException("Erro de comunicação com SeaweedFS.", Response.Status.BAD_GATEWAY);
             }
@@ -271,6 +293,8 @@ public class ProdutoFileServiceImpl implements FileService {
             throw new WebApplicationException("Operação com SeaweedFS interrompida.",
                     Response.Status.INTERNAL_SERVER_ERROR);
         } catch (IOException e) {
+            System.err.println("=== ERRO requestJson ===");
+            e.printStackTrace();
             throw new WebApplicationException("Erro ao processar resposta do SeaweedFS.", e,
                     Response.Status.BAD_GATEWAY);
         }
