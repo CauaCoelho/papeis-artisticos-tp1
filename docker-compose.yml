@@ -1,6 +1,12 @@
 version: '3.8'
 
 services:
+  seaweed-master:
+    image: chrislusf/seaweedfs
+    command: master
+    ports:
+      - "9333:9333"
+
   postgres-keycloak:
     image: postgres:16-alpine
     container_name: postgres-keycloak
@@ -14,7 +20,15 @@ services:
       - papeis-network
     volumes:
       - postgres-keycloak-data:/var/lib/postgresql/data
-
+  seaweed-volume:
+    image: chrislusf/seaweedfs
+    command: volume -mserver=seaweed-master:9333 -publicUrl=host.docker.internal:8081
+    depends_on:
+      - seaweed-master
+    ports:
+      - "8081:8080"
+    networks:
+      - papeis-network
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.0
     container_name: keycloak
@@ -59,3 +73,4 @@ networks:
 volumes:
   postgres-keycloak-data:
   postgres-papeis-data:
+
