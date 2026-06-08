@@ -23,7 +23,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
 
 @Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON) // Tipo de conteúdo que vai ser produzido

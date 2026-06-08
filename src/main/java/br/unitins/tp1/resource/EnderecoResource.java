@@ -1,17 +1,14 @@
 package br.unitins.tp1.resource;
 
-import java.util.List;
-
 import br.unitins.tp1.dto.EnderecoDTO;
 import br.unitins.tp1.dto.EnderecoDTOResponse;
-import br.unitins.tp1.service.EnderecoService;
+import br.unitins.tp1.service.EnderecoServiceImpl;
 import br.unitins.tp1.service.UsuarioLogadoService;
 import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -25,10 +22,10 @@ import jakarta.ws.rs.core.Response.Status;
  * Resource para gerenciar endereços do usuário autenticado.
  * 
  * Endpoints:
- * - GET  /usuarios/{id}/enderecos  : Listar endereços do usuário autenticado
- * - POST /enderecos                : Criar novo endereço (associado ao usuário logado via JWT)
- * - PUT  /enderecos/{id}           : Atualizar endereço
- * - DELETE /enderecos/{id}         : Remover endereço
+ * - GET /usuarios/{id}/enderecos : Listar endereços do usuário autenticado
+ * - POST /enderecos : Criar novo endereço (associado ao usuário logado via JWT)
+ * - PUT /enderecos/{id} : Atualizar endereço
+ * - DELETE /enderecos/{id} : Remover endereço
  */
 @Path("/enderecos")
 @Produces(MediaType.APPLICATION_JSON)
