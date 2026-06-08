@@ -1,8 +1,14 @@
 package br.unitins.tp1.resource;
 
+import java.util.List;
+
+import br.unitins.tp1.dto.EnderecoDTO;
+import br.unitins.tp1.dto.EnderecoDTOResponse;
 import br.unitins.tp1.dto.UsuarioDTO;
 import br.unitins.tp1.dto.UsuarioDTOResponse;
+import br.unitins.tp1.service.EnderecoServiceImpl;
 import br.unitins.tp1.service.UsuarioService;
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -17,6 +23,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response.Status;
 
 @Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON) // Tipo de conteúdo que vai ser produzido
@@ -24,8 +31,11 @@ import jakarta.ws.rs.core.Response;
                                       // todos os métodos
 public class UsuarioResource {
 
-    @Inject // injeção de dependência
+    @Inject
     UsuarioService service;
+
+    @Inject
+    EnderecoServiceImpl enderecoService;
 
     @GET
     public Response buscarTodos(
@@ -55,5 +65,17 @@ public class UsuarioResource {
     public Response excluir(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
+    }
+
+    /**
+     * Lista endereços do usuário.
+     * Requer autenticação JWT para garantir que só o próprio usuário acesse.
+     */
+    @GET
+    @Path("/{id}/enderecos")
+    @Authenticated
+    public Response listarEnderecos(@PathParam("id") Long id) {
+        List<EnderecoDTOResponse> enderecos = enderecoService.findByUsuario(id);
+        return Response.ok(enderecos).build();
     }
 }
