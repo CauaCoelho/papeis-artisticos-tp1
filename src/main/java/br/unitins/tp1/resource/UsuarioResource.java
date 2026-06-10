@@ -9,6 +9,7 @@ import br.unitins.tp1.dto.UsuarioDTOResponse;
 import br.unitins.tp1.service.EnderecoServiceImpl;
 import br.unitins.tp1.service.UsuarioService;
 import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -36,6 +37,7 @@ public class UsuarioResource {
     @Inject
     EnderecoServiceImpl enderecoService;
 
+    @RolesAllowed("ADMIN")
     @GET
     public Response buscarTodos(
             @QueryParam("page") @DefaultValue("0") int page,
@@ -43,6 +45,7 @@ public class UsuarioResource {
         return Response.ok(service.findAll()).build();
     }
 
+    @RolesAllowed("ADMIN")
     @GET
     @Path("/{id}")
     public UsuarioDTOResponse buscarPorId(
@@ -50,6 +53,7 @@ public class UsuarioResource {
         return service.findById(id);
     }
 
+    @RolesAllowed("ADMIN")
     @PUT
     @Path("/{id}")
     @Transactional
@@ -58,6 +62,7 @@ public class UsuarioResource {
         return Response.noContent().build();
     }
 
+    @RolesAllowed("ADMIN")
     @DELETE
     @Path("/{id}")
     @Transactional

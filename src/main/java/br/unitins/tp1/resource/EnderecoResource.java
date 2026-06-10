@@ -5,6 +5,7 @@ import br.unitins.tp1.dto.EnderecoDTOResponse;
 import br.unitins.tp1.service.EnderecoServiceImpl;
 import br.unitins.tp1.service.UsuarioLogadoService;
 import io.quarkus.security.Authenticated;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
@@ -27,6 +28,7 @@ import jakarta.ws.rs.core.Response.Status;
  * - PUT /enderecos/{id} : Atualizar endereço
  * - DELETE /enderecos/{id} : Remover endereço
  */
+@RolesAllowed("USER")
 @Path("/enderecos")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

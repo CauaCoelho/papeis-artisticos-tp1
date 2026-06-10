@@ -6,6 +6,7 @@ import br.unitins.tp1.dto.RoloDTO;
 import br.unitins.tp1.model.Rolo;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.service.RoloService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -24,46 +25,48 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 
 @Path("/rolos")
-@Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
-@Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
+@Produces(MediaType.APPLICATION_JSON) // Tipo de conteúdo que vai ser produzido
+@Consumes(MediaType.APPLICATION_JSON) // Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para
+                                      // todos os métodos
 public class RoloResource {
 
-
-    @Inject //injeção de dependência
+    @Inject // injeção de dependência
     RoloService service;
 
     @GET
     public Response buscarTodos(
-        @QueryParam("page") @DefaultValue("0") int page,
-        @QueryParam("pageSize") @DefaultValue("10") int pageSize
-    ) {
+            @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
         return Response.ok(service.findAll()).build();
     }
 
     @GET
-    @Path ("/find/{textura}") //Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
-    public List <Rolo> buscarPorTextura (Textura textura) {
+    @Path("/find/{textura}") // Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
+    public List<Rolo> buscarPorTextura(Textura textura) {
         return service.findByTextura(textura);
     }
 
+    @RolesAllowed("ADMIN")
     @POST
     @Transactional
-    public Response incluir (RoloDTO dto){
+    public Response incluir(RoloDTO dto) {
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
+    @RolesAllowed("ADMIN")
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response editar(@PathParam("id")Long id, @Valid RoloDTO dto){
+    public Response editar(@PathParam("id") Long id, @Valid RoloDTO dto) {
         service.update(id, dto);
         return Response.noContent().build();
     }
 
+    @RolesAllowed("ADMIN")
     @DELETE
     @Path("/{id}")
     @Transactional
-    public Response excluir(@PathParam("id")Long id){
+    public Response excluir(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
     }
