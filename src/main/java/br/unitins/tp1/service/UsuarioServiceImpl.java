@@ -61,5 +61,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findByLoginAndSenha'");
     }
+    
+    @Override
+    public UsuarioDTOResponse findBySub(String sub) {
+        Usuario usuario = repository.findBySub(sub);
+        if (usuario == null)
+            return null;
+        return UsuarioDTOResponse.valueOf(usuario);
+    }
 
 }

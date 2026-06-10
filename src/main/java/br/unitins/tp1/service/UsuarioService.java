@@ -13,6 +13,14 @@ public interface UsuarioService {
     UsuarioDTOResponse findById(Long id);
 
     UsuarioDTOResponse findByLogin(String login);
+    
+    /**
+     * Busca usuário pelo 'sub' (Subject) do Keycloak.
+     * Este é o ID único do usuário no Keycloak.
+     * @param sub ID do usuário no Keycloak
+     * @return DTO do usuário ou null se não encontrado
+     */
+    UsuarioDTOResponse findBySub(String sub);
 
     UsuarioDTOResponse findByLoginAndSenha(String login, String senha);
 

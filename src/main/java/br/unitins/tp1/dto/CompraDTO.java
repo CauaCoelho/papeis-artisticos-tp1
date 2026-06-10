@@ -4,9 +4,13 @@ import java.util.List;
 
 import br.unitins.tp1.model.FormaDePagamento;
 
+/**
+ * DTO para requisição de compra.
+ * Contém os dados necessários para criar uma nova compra.
+ */
 public record CompraDTO(
-        Long clienteId,
         List<ItemPedidoDTO> itens,
-        FormaDePagamento formaDePagamento) {
+        FormaDePagamento formaDePagamento,
+        Long cupomId) {  // Cupom é opcional
 
 }

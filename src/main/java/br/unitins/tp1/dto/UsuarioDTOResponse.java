@@ -7,6 +7,7 @@ public record UsuarioDTOResponse(
         Long id,
         String nome,
         String username,
+        String login,
         Perfil perfil) {
     public static UsuarioDTOResponse valueOf(Usuario usuario) {
         if (usuario == null)
@@ -15,6 +16,7 @@ public record UsuarioDTOResponse(
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getUsername(),
+                usuario.getLogin(),
                 usuario.getPerfil());
     }
 

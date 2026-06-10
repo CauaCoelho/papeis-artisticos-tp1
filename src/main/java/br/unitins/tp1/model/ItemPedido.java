@@ -1,5 +1,7 @@
 package br.unitins.tp1.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
@@ -16,7 +18,7 @@ public class ItemPedido extends DefaultEntity {
 
     private Integer quantidade;
 
-    private Double preco;
+    private BigDecimal preco;
 
     public Compra getCompra() {
         return compra;
@@ -42,11 +44,11 @@ public class ItemPedido extends DefaultEntity {
         this.quantidade = quantidade;
     }
 
-    public Double getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
 

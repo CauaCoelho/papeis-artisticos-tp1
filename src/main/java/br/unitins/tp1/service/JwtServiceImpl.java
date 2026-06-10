@@ -21,18 +21,21 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String generateJwt(UsuarioDTOResponse dto) {
-        Instant now = Instant.now();
-        Instant expiryDate = now.plus(EXPIRATION_TIME);
-
-        Set<String> roles = new HashSet<String>();
-        roles.add(dto.perfil().getNome());
-
-        return Jwt.issuer(issuer)
-                .subject(dto.username())
-                .upn(dto.username())
-                .groups(roles)
-                .expiresAt(expiryDate)
-                .sign();
+        throw new RuntimeException("TESTE");
+        /*
+         * Instant now = Instant.now();
+         * Instant expiryDate = now.plus(EXPIRATION_TIME);
+         * 
+         * Set<String> roles = new HashSet<String>();
+         * roles.add(dto.perfil().getNome());
+         * 
+         * return Jwt.issuer(issuer)
+         * .subject(dto.username())
+         * .upn(dto.username())
+         * .groups(roles)
+         * .expiresAt(expiryDate)
+         * .sign();
+         */
 
     }
 

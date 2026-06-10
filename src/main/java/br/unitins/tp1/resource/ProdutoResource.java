@@ -29,44 +29,50 @@ import org.jboss.resteasy.reactive.RestForm;
 import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import br.unitins.tp1.service.FileService;
-import java.io.IOException;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Min;
+
 @Path("/papeis")
-@Produces(MediaType.APPLICATION_JSON) //Tipo de conteúdo que vai ser produzido
-@Consumes(MediaType.APPLICATION_JSON) //Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para todos os métodos
+@Produces(MediaType.APPLICATION_JSON) // Tipo de conteúdo que vai ser produzido
+@Consumes(MediaType.APPLICATION_JSON) // Tipo de conteúdo consumido; Por a anotação estar na classe, então vale para
+                                      // todos os métodos
 public class ProdutoResource {
 
-
-    @Inject //injeção de dependência
+    @Inject // injeção de dependência
     ProdutoService service;
 
     @Inject
     FileService fileService;
+
     @GET
     public Response buscarTodos(
-        @QueryParam("page") @DefaultValue("0") int page,
-        @QueryParam("pageSize") @DefaultValue("10") int pageSize
-    ) {
+            @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("pageSize") @DefaultValue("10") int pageSize) {
         return Response.ok(service.findAll()).build();
     }
 
     @GET
-    @Path ("/find/{textura}") //Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
-    public List <Produto> buscarPorTextura (Textura textura) {
+    @Path("/{id}")
+    public Response buscarPorId(@PathParam("id") Long id) {
+        return Response.ok(service.findById(id)).build();
+    }
+
+    @GET
+    @Path("/find/{textura}") // Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
+    public List<Produto> buscarPorTextura(Textura textura) {
         return service.findByTextura(textura);
     }
 
     @POST
     @Transactional
-    public Response incluir (ProdutoDTO dto){
+    public Response incluir(ProdutoDTO dto) {
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response editar(@PathParam("id")Long id, @Valid ProdutoDTO dto){
+    public Response editar(@PathParam("id") Long id, @Valid ProdutoDTO dto) {
         service.update(id, dto);
         return Response.noContent().build();
     }
@@ -74,7 +80,7 @@ public class ProdutoResource {
     @DELETE
     @Path("/{id}")
     @Transactional
-    public Response excluir(@PathParam("id")Long id){
+    public Response excluir(@PathParam("id") Long id) {
         service.delete(id);
         return Response.noContent().build();
     }
@@ -94,20 +100,18 @@ public class ProdutoResource {
     @Path("/image/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagem(
-            @RestForm("idProduto") 
-            @NotNull(message = "idProduto é obrigatório.")
-            @Min(value = 1, message = "idProduto deve ser maior ou igual a 1.")
-            Long idProduto,
+            @RestForm("idProduto") @NotNull(message = "idProduto é obrigatório.") @Min(value = 1, message = "idProduto deve ser maior ou igual a 1.") Long idProduto,
 
-            @RestForm("file") 
-            @NotNull(message = "Arquivo de imagem é obrigatório.")
-            FileUpload file) {
+            @RestForm("file") @NotNull(message = "Arquivo de imagem é obrigatório.") FileUpload file) {
 
         try {
             fileService.salvar(idProduto, file);
             return Response.noContent().build();
-        } catch (IOException e) {
-            return Response.status(Status.CONFLICT).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.serverError()
+                    .entity(e.getMessage())
+                    .build();
         }
     }
 }

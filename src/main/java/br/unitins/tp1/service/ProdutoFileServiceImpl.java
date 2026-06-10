@@ -59,15 +59,24 @@ public class ProdutoFileServiceImpl implements FileService {
     @Override
     @Transactional
     public void salvar(Long id, FileUpload file) throws IOException {
+        System.out.println("=== INICIO SALVAR ===");
+        System.out.println("ID: " + id);
+        System.out.println("File: " + (file == null ? "NULL" : file.fileName()));
+        System.out.println("File path: " + (file == null ? "NULL" : file.uploadedFile()));
+        System.out.println("File size: " + (file == null ? "NULL" : file.size()));
         Produto produto = produtoRepository.findById(id);
+        System.out.println("Produto: " + (produto == null ? "NULL" : produto.getNome()));
+
         if (produto == null) {
             throw new NotFoundException("Produto não encontrado.");
         }
-
+        System.out.println("Antes validarTamanho");
         validarTamanho(file);
+        System.out.println("Antes validarExtensao");
         validarExtensao(file);
-
+        System.out.println("Antes uploadParaSeaweed");
         String fid = uploadParaSeaweed(file);
+        System.out.println("FID retornado: " + fid);
         Arquivo arquivo = buildArquivoEntity(file, fid);
         arquivoRepository.persist(arquivo);
         produto.addArquivo(arquivo);
@@ -92,12 +101,17 @@ public class ProdutoFileServiceImpl implements FileService {
     }
 
     private String uploadParaSeaweed(FileUpload file) throws IOException {
+        System.out.println("=== INICIO uploadParaSeaweed ===");
+        System.out.println("masterUrl: " + masterUrl);
+        System.out.println("URL assign: " + masterUrl + "/dir/assign");
         String fileName = Paths.get(file.fileName()).getFileName().toString();
         String extension = getExtension(fileName);
         String normalizedName = UUID.randomUUID() + (extension == null ? "" : "." + extension.toLowerCase(Locale.ROOT));
         byte[] fileBytes = Files.readAllBytes(file.uploadedFile());
 
         JsonNode assignJson = requestJson("GET", masterUrl + "/dir/assign", null, null);
+        System.out.println("ASSIGN:");
+        System.out.println(assignJson);
         String fid = text(assignJson, "fid");
         String volumeUrl = text(assignJson, "publicUrl");
         if (volumeUrl == null) {
@@ -105,7 +119,8 @@ public class ProdutoFileServiceImpl implements FileService {
         }
 
         if (fid == null || volumeUrl == null) {
-            throw new WebApplicationException("Resposta inválida do SeaweedFS ao alocar arquivo.", Response.Status.BAD_GATEWAY);
+            throw new WebApplicationException("Resposta inválida do SeaweedFS ao alocar arquivo.",
+                    Response.Status.BAD_GATEWAY);
         }
 
         String boundary = "----QuarkusSeaweedBoundary" + UUID.randomUUID();
@@ -118,6 +133,8 @@ public class ProdutoFileServiceImpl implements FileService {
                 .POST(HttpRequest.BodyPublishers.ofByteArray(body))
                 .build();
 
+        System.out.println("FID: " + fid);
+        System.out.println("URL: http://" + volumeUrl + "/" + fid);
         HttpResponse<String> response;
         try {
             response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -129,8 +146,10 @@ public class ProdutoFileServiceImpl implements FileService {
         if (response.statusCode() < 200 || response.statusCode() >= 300) {
             throw new WebApplicationException("Falha ao enviar imagem para o SeaweedFS.", Response.Status.BAD_GATEWAY);
         }
-
+        System.out.println("STATUS: " + response.statusCode());
+        System.out.println("BODY: " + response.body());
         return fid;
+
     }
 
     @Override
@@ -140,7 +159,8 @@ public class ProdutoFileServiceImpl implements FileService {
         }
 
         Arquivo meta = arquivoRepository.findByFid(fid)
-                .orElseThrow(() -> new WebApplicationException("Imagem não encontrada no banco de dados.", Response.Status.NOT_FOUND));
+                .orElseThrow(() -> new WebApplicationException("Imagem não encontrada no banco de dados.",
+                        Response.Status.NOT_FOUND));
 
         String volumeId = extractVolumeId(fid);
         JsonNode lookup = requestJson("GET", masterUrl + "/dir/lookup?volumeId=" + volumeId, null, null);
@@ -190,14 +210,20 @@ public class ProdutoFileServiceImpl implements FileService {
         }
 
         Arquivo arquivo = arquivoRepository.findByFid(fid)
-                .orElseThrow(() -> new WebApplicationException("Imagem não encontrada no banco de dados.", Response.Status.NOT_FOUND));
+                .orElseThrow(() -> new WebApplicationException("Imagem não encontrada no banco de dados.",
+                        Response.Status.NOT_FOUND));
 
         deletarNoSeaweedBestEffort(fid);
-        // We cannot cleanly remove from Produto if we don't know the Produto id, unless we query it or if it's fine to leave it orphan.
-        // But since we mapped it via @JoinTable in Produto, if we delete the Arquivo, the DB might complain about FK if we don't remove the association.
-        // So we need to find the Produto and remove it. But how? Wait, Produto does not have a reference backward if it's unidirectional.
-        // Let's assume there is a query we can run, or just delete the entity and rely on DB cascade/orphanRemoval if handled. 
-        // For now, let's omit the inverse deletion or assume the user deletes via the Produto.
+        // We cannot cleanly remove from Produto if we don't know the Produto id, unless
+        // we query it or if it's fine to leave it orphan.
+        // But since we mapped it via @JoinTable in Produto, if we delete the Arquivo,
+        // the DB might complain about FK if we don't remove the association.
+        // So we need to find the Produto and remove it. But how? Wait, Produto does not
+        // have a reference backward if it's unidirectional.
+        // Let's assume there is a query we can run, or just delete the entity and rely
+        // on DB cascade/orphanRemoval if handled.
+        // For now, let's omit the inverse deletion or assume the user deletes via the
+        // Produto.
         arquivoRepository.delete(arquivo);
     }
 
@@ -248,23 +274,37 @@ public class ProdutoFileServiceImpl implements FileService {
 
         try {
             HttpResponse<String> response = httpClient.send(builder.build(), HttpResponse.BodyHandlers.ofString());
+            // ← Adicione esses logs
+            System.out.println("=== SeaweedFS Response ===");
+            System.out.println("URL: " + url);
+            System.out.println("Status: " + response.statusCode());
+            System.out.println("Body: " + response.body());
+            System.out.println("=========================");
+
+            if (response.statusCode() == 404) {
+                throw new WebApplicationException("Recurso não encontrado no SeaweedFS.", Response.Status.NOT_FOUND);
+            }
             if (response.statusCode() < 200 || response.statusCode() >= 300) {
                 throw new WebApplicationException("Erro de comunicação com SeaweedFS.", Response.Status.BAD_GATEWAY);
             }
             return objectMapper.readTree(response.body());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new WebApplicationException("Operação com SeaweedFS interrompida.", Response.Status.INTERNAL_SERVER_ERROR);
+            throw new WebApplicationException("Operação com SeaweedFS interrompida.",
+                    Response.Status.INTERNAL_SERVER_ERROR);
         } catch (IOException e) {
-            throw new WebApplicationException("Erro ao processar resposta do SeaweedFS.", e, Response.Status.BAD_GATEWAY);
+            System.err.println("=== ERRO requestJson ===");
+            e.printStackTrace();
+            throw new WebApplicationException("Erro ao processar resposta do SeaweedFS.", e,
+                    Response.Status.BAD_GATEWAY);
         }
     }
 
     private byte[] buildMultipartBody(String boundary, String fileName, String contentType, byte[] bytes) {
-        String safeContentType = (contentType == null || contentType.isBlank()) ? "application/octet-stream" : contentType;
+        String safeContentType = (contentType == null || contentType.isBlank()) ? "application/octet-stream"
+                : contentType;
 
-        byte[] prefix = (
-                "--" + boundary + "\r\n" +
+        byte[] prefix = ("--" + boundary + "\r\n" +
                 "Content-Disposition: form-data; name=\"file\"; filename=\"" + fileName + "\"\r\n" +
                 "Content-Type: " + safeContentType + "\r\n\r\n")
                 .getBytes(StandardCharsets.UTF_8);
@@ -289,10 +329,12 @@ public class ProdutoFileServiceImpl implements FileService {
             throw new WebApplicationException("Arquivo vazio.", Response.Status.BAD_REQUEST);
         }
         if (size < MIN_FILE_SIZE) {
-            throw new WebApplicationException("Arquivo muito pequeno para ser considerado imagem válida.", Response.Status.BAD_REQUEST);
+            throw new WebApplicationException("Arquivo muito pequeno para ser considerado imagem válida.",
+                    Response.Status.BAD_REQUEST);
         }
         if (size > MAX_FILE_SIZE) {
-            throw new WebApplicationException("Arquivo muito grande. Máximo permitido: " + MAX_FILE_SIZE + " bytes.", Response.Status.BAD_REQUEST);
+            throw new WebApplicationException("Arquivo muito grande. Máximo permitido: " + MAX_FILE_SIZE + " bytes.",
+                    Response.Status.BAD_REQUEST);
         }
     }
 

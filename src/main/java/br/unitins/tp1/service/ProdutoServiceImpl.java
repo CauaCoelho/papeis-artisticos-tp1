@@ -10,7 +10,6 @@ import br.unitins.tp1.model.VarianteProduto;
 import br.unitins.tp1.repository.ProdutoRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class ProdutoServiceImpl implements ProdutoService {

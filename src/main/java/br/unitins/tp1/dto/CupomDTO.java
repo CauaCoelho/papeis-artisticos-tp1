@@ -1,9 +1,10 @@
 package br.unitins.tp1.dto;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record CupomDTO(
     String codigo,
-    Double valor,
+    BigDecimal valor,
     LocalDateTime validade
 ) { }

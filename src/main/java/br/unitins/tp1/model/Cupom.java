@@ -1,5 +1,6 @@
 package br.unitins.tp1.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Cupom {
     @Column(nullable = false)
     private LocalDateTime validade;
     
-    private double valor;
+    private BigDecimal valor;
     @ManyToMany
     private List<Produto> produtosPermitidos;
 
@@ -50,11 +51,11 @@ public class Cupom {
         this.validade = validade;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
 

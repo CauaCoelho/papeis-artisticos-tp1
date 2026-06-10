@@ -1,5 +1,7 @@
 package br.unitins.tp1.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -9,7 +11,7 @@ public class VarianteProduto extends DefaultEntity {
     private String formato;
     private int gramatura;
     private String cor;
-    private double preco;
+    private BigDecimal preco;
 
     @ManyToOne
     @JoinColumn(name = "id_produto")
@@ -39,11 +41,11 @@ public class VarianteProduto extends DefaultEntity {
         this.cor = cor;
     }
 
-    public double getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
 

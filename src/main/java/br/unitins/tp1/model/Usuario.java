@@ -8,10 +8,18 @@ import jakarta.persistence.Enumerated;
 @Entity
 public class Usuario extends DefaultEntity {
     private String nome;
-    private String username;
+    
     @Column(unique = true)
     private String login;
-    private String senha;
+    private String username;
+    
+    /**
+     * ID do usuário no Keycloak (sub claim do JWT)
+     * Gerenciado pelo Keycloak, não deve ser alterado
+     */
+    @Column(unique = true, nullable = false)
+    private String sub;
+    
     @Enumerated(EnumType.STRING)
     private Perfil perfil;
 
@@ -23,14 +31,6 @@ public class Usuario extends DefaultEntity {
         this.nome = nome;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getLogin() {
         return login;
     }
@@ -39,12 +39,12 @@ public class Usuario extends DefaultEntity {
         this.login = login;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getSub() {
+        return sub;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setSub(String sub) {
+        this.sub = sub;
     }
 
     public Perfil getPerfil() {
@@ -53,6 +53,14 @@ public class Usuario extends DefaultEntity {
 
     public void setPerfil(Perfil perfil) {
         this.perfil = perfil;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }
