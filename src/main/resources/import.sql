@@ -18,3 +18,15 @@ insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_
 
 insert into produto (nome, preco, estoque, textura_id) values ('Sketchbook Artístico', 120.00, 5, 'CASCA_DE_OVO');
 insert into sketchbook (id, quantidadeFolhas, capa_id) values (currval('produto_id_seq'), 75, 'CARTAO');
+
+-- Inserir PapelAvulso
+insert into produto (nome, preco, estoque, textura_id) values ('Papel Canson A4', 25.90, 50, 'LISO');
+insert into papelavulso (id, tipoPapel, tamanho) values (currval('produto_id_seq'), 'Canson', 'A4');
+
+-- Inserir Rolo
+insert into produto (nome, preco, estoque, textura_id) values ('Papel Kraft em Rolo', 89.90, 12, 'KRAFT');
+insert into rolo (id, comprimento) values (currval('produto_id_seq'), 10.0);
+
+-- Inserir Bloco
+insert into produto (nome, preco, estoque, textura_id) values ('Bloco de Aquarela Hahnemühle', 150.00, 8, 'TRANCADO');
+insert into bloco (id, quantidadeFolhas) values (currval('produto_id_seq'), 20);

@@ -1,5 +1,8 @@
 package br.unitins.tp1.model;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class PapelAvulso extends Produto {
     private String tipoPapel;
     private String tamanho;

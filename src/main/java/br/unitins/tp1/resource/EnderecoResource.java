@@ -7,7 +7,6 @@ import br.unitins.tp1.dto.EnderecoDTOResponse;
 import br.unitins.tp1.service.EnderecoServiceImpl;
 import br.unitins.tp1.service.UsuarioLogadoService;
 import io.quarkus.security.Authenticated;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
