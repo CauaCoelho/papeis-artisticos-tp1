@@ -18,13 +18,13 @@ public class ProdutoServiceImpl implements ProdutoService {
     ProdutoRepository repository;
 
     @Override
-    public List<Produto> findAll() {
-        return repository.listAll();
+    public List<ProdutoDTOResponse> findAll() {
+        return repository.listAll().stream().map(ProdutoDTOResponse::valueOf).toList();
     }
 
     @Override
-    public List<Produto> findByTextura(Textura textura) {
-        return repository.findByTextura(textura);
+    public List<ProdutoDTOResponse> findByTextura(Textura textura) {
+        return repository.findByTextura(textura).stream().map(ProdutoDTOResponse::valueOf).toList();
     }
 
     @Override

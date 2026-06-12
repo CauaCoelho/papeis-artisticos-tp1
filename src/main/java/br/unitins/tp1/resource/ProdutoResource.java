@@ -59,8 +59,8 @@ public class ProdutoResource {
 
     @GET
     @Path("/find/{textura}") // Vai adicionar uma segunda camada de recurso: site.com/papeis/find/{textura}
-    public List<Produto> buscarPorTextura(Textura textura) {
-        return service.findByTextura(textura);
+    public Response buscarPorTextura(Textura textura) {
+        return Response.ok(service.findByTextura(textura)).build();
     }
 
     @POST

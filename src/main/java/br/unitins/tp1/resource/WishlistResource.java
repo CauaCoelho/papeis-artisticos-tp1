@@ -107,15 +107,6 @@ public class WishlistResource {
      * @throws WebApplicationException se o usuário não for encontrado
      */
     private Long obterIdUsuarioDoToken() {
-        String sub = jwt.getSubject();
-        var usuarioDTOResponse = usuarioService.findBySub(sub);
-
-        if (usuarioDTOResponse == null) {
-            throw new jakarta.ws.rs.WebApplicationException(
-                    "Usuário não encontrado",
-                    Status.UNAUTHORIZED);
-        }
-
-        return usuarioDTOResponse.id();
+        return usuarioLogadoService.getIdUsuarioLogado();
     }
 }

@@ -60,15 +60,8 @@ public class CompraResource {
     @RolesAllowed("USER")
     @Transactional
     public Response realizarCompra(CompraDTO dto) {
-        String sub = jwt.getSubject();
-        var usuarioDTOResponse = usuarioService.findBySub(sub);
-        if (usuarioDTOResponse == null) {
-            throw new jakarta.ws.rs.WebApplicationException(
-                    "Usuário não encontrado",
-                    Status.UNAUTHORIZED);
-        }
-
-        CompraDTOResponse compra = compraService.create(usuarioDTOResponse.id(), dto);
+        Long usuarioId = usuarioLogadoService.getIdUsuarioLogado();
+        CompraDTOResponse compra = compraService.create(usuarioId, dto);
         return Response.status(Status.CREATED).entity(compra).build();
     }
 

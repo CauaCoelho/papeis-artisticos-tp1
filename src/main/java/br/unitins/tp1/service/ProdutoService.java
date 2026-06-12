@@ -8,8 +8,8 @@ import br.unitins.tp1.model.Produto;
 import br.unitins.tp1.model.Textura;
 
 public interface ProdutoService {
-    List<Produto> findAll();
-    List<Produto> findByTextura (Textura textura);
+    List<ProdutoDTOResponse> findAll();
+    List<ProdutoDTOResponse> findByTextura (Textura textura);
     ProdutoDTOResponse findById(Long id);
     ProdutoDTOResponse create (ProdutoDTO dto);
     void update (Long id, ProdutoDTO dto);

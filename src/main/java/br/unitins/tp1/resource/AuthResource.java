@@ -12,7 +12,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.Response.Status;
 
 /**
  * Resource de Autenticação integrado com Keycloak via OIDC.
@@ -31,10 +30,7 @@ import jakarta.ws.rs.core.Response.Status;
 public class AuthResource {
 
     @Inject
-    UsuarioService usuarioService;
-
-    @Inject
-    JsonWebToken jwt;
+    br.unitins.tp1.service.UsuarioLogadoService usuarioLogadoService;
 
     /**
      * Retorna dados do usuário autenticado.
@@ -46,16 +42,7 @@ public class AuthResource {
     @Path("/me")
     @Authenticated
     public Response me() {
-        // Extrai o 'sub' (Subject) do token JWT - ID do usuário no Keycloak
-        String sub = jwt.getSubject();
-        
-        // Busca o usuário no banco pela chave do Keycloak
-        UsuarioDTOResponse usuario = usuarioService.findBySub(sub);
-
-        if (usuario == null) {
-            throw new jakarta.ws.rs.WebApplicationException("Usuario nao encontrado", Status.UNAUTHORIZED);
-        }
-
-        return Response.ok(usuario).build();
+        br.unitins.tp1.model.Usuario usuario = usuarioLogadoService.getUsuarioLogado();
+        return Response.ok(UsuarioDTOResponse.valueOf(usuario)).build();
     }
 }

@@ -14,7 +14,7 @@ public record ProdutoDTOResponse(
         BigDecimal preco,
         int estoque,
         Textura textura,
-        Marca marca,
+        MarcaDTOResponse marca,
         EspecificacaoTecnica especificacaoTecnica,
         List<ArquivoResponseDTO> imagens) {
     public static ProdutoDTOResponse valueOf(Produto produto) {
@@ -26,7 +26,7 @@ public record ProdutoDTOResponse(
                 produto.getPreco(),
                 produto.getEstoque(),
                 produto.getTextura(),
-                produto.getMarca(),
+                produto.getMarca() == null ? null : MarcaDTOResponse.valueOf(produto.getMarca()),
                 produto.getEspecificacaoTecnica(),
                 produto.getArquivos() == null ? java.util.Collections.emptyList()
                         : produto.getArquivos().stream().map(ArquivoResponseDTO::valueOf).toList());

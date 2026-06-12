@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 @Entity
 public class Marca {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
     private String nome;
 
