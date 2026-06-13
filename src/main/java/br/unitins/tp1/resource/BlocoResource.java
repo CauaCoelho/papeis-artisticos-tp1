@@ -47,7 +47,7 @@ public class BlocoResource {
 
     @POST
     @Transactional
-    public Response incluir(BlocoDTO dto) {
+    public Response incluir(@Valid BlocoDTO dto) {
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 

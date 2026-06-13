@@ -48,7 +48,7 @@ public class PapelAvulsoResource {
 
     @POST
     @Transactional
-    public Response incluir (PapelAvulsoDTO dto){
+    public Response incluir (@Valid PapelAvulsoDTO dto){
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 

@@ -1,6 +1,7 @@
 package br.unitins.tp1.service;
 
 import java.util.List;
+
 import br.unitins.tp1.dto.PageResponse;
 import br.unitins.tp1.dto.SketchbookDTO;
 import br.unitins.tp1.dto.SketchbookDTOResponse;
@@ -68,6 +69,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Override
     public Sketchbook create(SketchbookDTO dto) {
         Sketchbook sketchbook = new Sketchbook();
+        sketchbook.setNome(dto.nome());
         sketchbook.setTextura(Textura.valueOf(dto.idTextura()));
         sketchbook.setCapa(Capa.valueOf(dto.idCapa()));
         sketchbook.setQuantidadeFolhas(dto.quantidadeFolhas());
@@ -85,6 +87,7 @@ public class SketchbookServiceImpl implements SketchbookService {
     @Override
     public void update(Long id, SketchbookDTO dto) {
         Sketchbook sketchbook = repository.findById(id);
+        sketchbook.setNome(dto.nome());
         sketchbook.setTextura(Textura.valueOf(dto.idTextura()));
         sketchbook.setCapa(Capa.valueOf(dto.idCapa()));
         sketchbook.setQuantidadeFolhas(dto.quantidadeFolhas());

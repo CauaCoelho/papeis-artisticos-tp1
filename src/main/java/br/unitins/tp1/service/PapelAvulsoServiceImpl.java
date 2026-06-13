@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.unitins.tp1.dto.PapelAvulsoDTO;
 import br.unitins.tp1.dto.PapelAvulsoDTOResponse;
-
 import br.unitins.tp1.model.PapelAvulso;
 import br.unitins.tp1.model.Textura;
 import br.unitins.tp1.repository.PapelAvulsoRepository;
@@ -37,6 +36,11 @@ public class PapelAvulsoServiceImpl implements PapelAvulsoService{
     @Override
     public PapelAvulsoDTOResponse create(PapelAvulsoDTO dto) {
         PapelAvulso papelavulso = new PapelAvulso();
+        papelavulso.setTipoPapel(dto.tipoPapel());
+        papelavulso.setTamanho(dto.tamanho());
+        if (dto.idTextura() != null) {
+            papelavulso.setTextura(Textura.valueOf(dto.idTextura()));
+        }
         repository.persist(papelavulso); //manter os dados no BD
         return PapelAvulsoDTOResponse.valueOf(papelavulso);
     }

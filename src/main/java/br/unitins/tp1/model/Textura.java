@@ -1,8 +1,8 @@
 package br.unitins.tp1.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonFormat(shape = Shape.OBJECT)
 public enum Textura { 
@@ -24,8 +24,9 @@ public enum Textura {
     }
 
     public static Textura valueOf(Long id){
+        if (id == null) return null;
         for (Textura textura : Textura.values()) {
-            if(id == textura.ID)
+            if (textura.ID != null && textura.ID.equals(id))
                 return textura;
         }
         return null;

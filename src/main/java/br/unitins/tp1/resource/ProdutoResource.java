@@ -1,18 +1,22 @@
 package br.unitins.tp1.resource;
 
-import java.util.List;
+import org.jboss.resteasy.reactive.RestForm;
+import org.jboss.resteasy.reactive.multipart.FileUpload;
 
 import br.unitins.tp1.dto.ProdutoDTO;
-import br.unitins.tp1.model.Produto;
 import br.unitins.tp1.model.Textura;
+import br.unitins.tp1.service.FileService;
 import br.unitins.tp1.service.ProdutoService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -23,14 +27,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
 import jakarta.ws.rs.core.Response.Status;
-import jakarta.ws.rs.PATCH;
-
-import org.jboss.resteasy.reactive.RestForm;
-import org.jboss.resteasy.reactive.multipart.FileUpload;
-
-import br.unitins.tp1.service.FileService;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Min;
 
 @Path("/papeis")
 @Produces(MediaType.APPLICATION_JSON) // Tipo de conteúdo que vai ser produzido
@@ -65,7 +61,7 @@ public class ProdutoResource {
 
     @POST
     @Transactional
-    public Response incluir(ProdutoDTO dto) {
+    public Response incluir(@Valid ProdutoDTO dto) {
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 

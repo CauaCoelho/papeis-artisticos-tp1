@@ -53,7 +53,7 @@ public class SketchbookResource {
 
     @POST
     @Transactional
-    public Response incluir(SketchbookDTO dto) {
+    public Response incluir(@Valid SketchbookDTO dto) {
         return Response.status(Status.CREATED).entity(service.create(dto)).build();
     }
 
